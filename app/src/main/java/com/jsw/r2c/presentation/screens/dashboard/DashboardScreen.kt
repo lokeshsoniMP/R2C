@@ -101,6 +101,29 @@ fun DashBoardScreen(navController: NavController, viewModel: AuthViewModel = hil
                 Spacer(modifier = Modifier.padding(12.dp))
                 Text(text = "Click to Generate New Requisition Request")
             }
+            Spacer(modifier = Modifier.padding(8.dp))
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+
+                    .border(2.dp, BlueDark, RoundedCornerShape(8))
+                    .padding(16.dp)
+                    .clickable {
+                        navController.navigate(DashBoardNavigationRoute.CreateRequisition.route)
+                    },
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Spacer(modifier = Modifier.padding(12.dp))
+                Image(
+                    painter = painterResource(id = R.drawable.scan_qr),
+                    contentDescription = "requisition",
+                    modifier = Modifier.size(42.dp)
+                )
+                Spacer(modifier = Modifier.padding(12.dp))
+                Text(text = "Scan Goods Issue Note")
+            }
         }
 
 

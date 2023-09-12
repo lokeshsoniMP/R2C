@@ -11,10 +11,10 @@ object UserType{
     const val PRODUCTION_HEAD :String="ProductionHead"
     const val AS_MANAGER_HEAD :String="Manager"
     const val AS_STOREINCHAREGE :String="StoreIncharge"
-    const val AS_PACKAGINGSUPERVISOR :String="Manager"
-    const val AS_TRASPORTPERSON :String="Manager"
-    const val AS_GATEKEEPER :String="Manager"
-    const val AS_PRODUCTIONSUPERVISOR :String="Manager"
+    const val AS_PACKAGINGSUPERVISOR :String="PackingSupervisor"
+    const val AS_TRASPORTPERSON :String="TransportPerson"
+    const val AS_GATEKEEPER :String="GateKeeper"
+    const val AS_PRODUCTIONSUPERVISOR :String="PackingSupervisor"
 
 }
 

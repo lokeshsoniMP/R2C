@@ -63,4 +63,8 @@ class DashboardProductionHeadActivity : ComponentActivity() {
             }
         }
     }
+    override fun onBackPressed() {
+        onBackPressedDispatcher.onBackPressed()
+        finish()
+    }
 }

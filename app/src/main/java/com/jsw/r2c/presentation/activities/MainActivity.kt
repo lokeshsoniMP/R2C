@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.window.OnBackInvokedDispatcher
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -115,6 +116,14 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+
+    override fun onBackPressed() {
+        onBackPressedDispatcher.onBackPressed()
+        finish()
+    }
+
+
 }
 
 

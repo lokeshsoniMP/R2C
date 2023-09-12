@@ -1,6 +1,7 @@
 package com.jsw.r2c.presentation.screens.dashboard
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -33,6 +34,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.jsw.r2c.presentation.activities.productionhead.DashboardProductionHeadActivity
 import com.jsw.r2c.presentation.screens.dashboard.role.ManagerDashBoardScreen
 import com.jsw.r2c.presentation.screens.dashboard.role.PackagingSuperVisorDashBoardScreen
 import com.jsw.r2c.presentation.screens.dashboard.role.ProductionHeadDashBoardScreen
@@ -142,6 +144,15 @@ fun DashBoardMainScreen() {
             TopAppBarR2C(onClickHamBurger = {
                 scope.launch {
                     drawerState.open()
+                }
+            })
+
+            TopAppBarR2C(onClickIcon = {
+                scope.launch {
+                   /* val intent =
+                        Intent(this, TrackingRequisitionScreen::class.java)
+                    startActivity(intent)
+                    finish()*/
                 }
             })
 

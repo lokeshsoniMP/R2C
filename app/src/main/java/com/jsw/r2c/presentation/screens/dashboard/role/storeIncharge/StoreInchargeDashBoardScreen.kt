@@ -27,10 +27,12 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.jsw.r2c.R
 import com.jsw.r2c.base.Utilis
 import com.jsw.r2c.presentation.screens.dashboard.role.RequisitionRequest
 import com.jsw.r2c.presentation.screens.dashboard.role.RequisitionText
@@ -38,6 +40,7 @@ import com.jsw.r2c.presentation.theme.BlueDark
 import com.jsw.r2c.presentation.theme.Kefa
 import com.jsw.r2c.presentation.viewmodels.features.auth.AuthViewModel
 import com.jsw.r2c.presentation.viewmodels.features.requisition.RequisitionViewModel
+import com.jsw.r2c.retrofit.request.requisition.CreateRequisitionRequest
 import com.jsw.r2c.retrofit.response.material.MaterialResponse
 import com.jsw.r2c.retrofit.response.material.MaterialResponseItem
 import com.jsw.r2c.retrofit.response.plant.PlantResponse
@@ -48,6 +51,7 @@ import com.jsw.r2c.retrofit.response.storage.StorageLocationResponse
 import com.jsw.r2c.retrofit.response.unit.UnitTypeResponse
 import com.jsw.r2c.retrofit.response.unit.UnitTypeResponseItem
 import com.jsw.r2c.retrofit.utlis.ApiState
+import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -293,6 +297,20 @@ fun StoreInchargeDashBoardScreen(navController: NavController,
                             requisitionList.get(requisitionRequestIndex).plantId == it.id
                         }?.plantName ?: ""
                     )
+
+                    Button(
+                        modifier = Modifier.fillMaxWidth(),
+                        onClick = {
+
+                        },
+                        colors = ButtonDefaults.buttonColors(
+                            disabledContainerColor = BlueDark,
+                            containerColor = BlueDark
+                        ), shape = RoundedCornerShape(12)
+
+                    ) {
+                        Text(text = stringResource(R.string.assign_supervise), color = Color.White)
+                    }
 
 
                     LaunchedEffect(key1 = Unit) {

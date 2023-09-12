@@ -1,5 +1,6 @@
 package com.jsw.r2c.presentation.customviews
 
+import android.content.Intent
 import android.provider.CalendarContract.Colors
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -22,11 +23,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jsw.r2c.R
+import com.jsw.r2c.presentation.activities.productionhead.DashboardProductionHeadActivity
+import com.jsw.r2c.presentation.screens.dashboard.navigation.DashBoardNavigationRoute
 import com.jsw.r2c.presentation.theme.BlueDark
 import com.jsw.r2c.presentation.theme.Kefa
 
 @Composable
-fun TopAppBarR2C(onClickHamBurger: () -> Unit = {}) {
+fun TopAppBarR2C(onClickHamBurger: () -> Unit = {},onClickIcon: () -> Unit = {}) {
 
     Row(
         modifier = Modifier
@@ -81,7 +84,12 @@ fun TopAppBarR2C(onClickHamBurger: () -> Unit = {}) {
                 painter = painterResource(id = R.drawable.notification),
                 contentDescription = "Notification Icon",
                 modifier = Modifier
-                    .size(28.dp),
+                    .size(28.dp)
+                    .clickable {
+                        onClickIcon.invoke()
+
+                    },
+
             )
             Spacer(modifier = Modifier.padding(8.dp))
             Image(

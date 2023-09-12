@@ -33,4 +33,7 @@ class DashboardStoreInchargeActivity : ComponentActivity() {
             }
         }
     }
+    override fun onBackPressed() {
+        onBackPressedDispatcher.onBackPressed() // with this line
+    }
 }

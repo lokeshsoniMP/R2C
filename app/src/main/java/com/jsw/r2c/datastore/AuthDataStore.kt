@@ -44,6 +44,11 @@ class AuthDataStoreManager(val context: Context) {
             it[ID] = id
         }
     }
+    suspend fun removeUser() {
+        context.dataStore.edit {
+            it.clear()
+        }
+    }
 
 
     val getId: Flow<String> = context.dataStore.data.map { preferences ->

@@ -80,6 +80,14 @@ class AuthViewModel @Inject constructor(
 
     }
 
+
+    fun removeUserAppLoginPref() = viewModelScope.launch {
+        authDataStore.removeUser()
+        authDataStore.isLogin(false)
+
+
+    }
+
     fun saveUser(token: String) {
         val jwt = JWT(token)
         val id = jwt.getClaim("Id").asString()

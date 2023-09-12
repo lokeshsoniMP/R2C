@@ -63,4 +63,7 @@ class DashboardGateKeeperActivity : ComponentActivity() {
             }
         }
     }
+    override fun onBackPressed() {
+        onBackPressedDispatcher.onBackPressed() // with this line
+    }
 }

@@ -62,4 +62,9 @@ class DashboardManagerApprovalactivity : ComponentActivity() {
             }
         }
     }
+    override fun onBackPressed() {
+        onBackPressedDispatcher.onBackPressed()
+        finish()
+
+    }
 }

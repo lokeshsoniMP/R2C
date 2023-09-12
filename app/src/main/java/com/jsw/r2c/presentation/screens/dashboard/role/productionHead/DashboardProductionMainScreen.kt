@@ -28,17 +28,20 @@ import com.jsw.r2c.presentation.screens.dashboard.navigation.DashBoardNavigation
 import com.jsw.r2c.presentation.screens.dashboard.navigation.NavigationItem
 import kotlinx.coroutines.launch
 import androidx.compose.material3.Scaffold
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.jsw.r2c.presentation.screens.auth.LoginScreen
 import com.jsw.r2c.presentation.screens.dashboard.DashBoardScreen
+import com.jsw.r2c.presentation.viewmodels.features.auth.AuthViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun DashBoardProductionMainScreen() {
+fun DashBoardProductionMainScreen(authViewModel: AuthViewModel = hiltViewModel()) {
     val navController = rememberNavController()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     var selectedItemIndex by rememberSaveable {
@@ -67,6 +70,12 @@ fun DashBoardProductionMainScreen() {
             unselectedIcon = Icons.Outlined.Home,
             route = DashBoardNavigationRoute.ManagerDashaBoardScreen.route
         ),
+        NavigationItem(
+            title = "Logout",
+            selectedIcon = Icons.Filled.Home,
+            unselectedIcon = Icons.Outlined.Home,
+            route = DashBoardNavigationRoute.Logout.route
+        )
 
     )
     ModalNavigationDrawer(
@@ -122,6 +131,11 @@ fun DashBoardProductionMainScreen() {
                     }
                     composable(DashBoardNavigationRoute.RequisitionDashBoardScreen.route) {
                         RequisitionDashboardProductionHead()
+                    }
+                    composable(DashBoardNavigationRoute.Logout.route) {
+                        authViewModel.removeUserAppLoginPref()
+                        LoginScreen()
+
                     }
 
                 }

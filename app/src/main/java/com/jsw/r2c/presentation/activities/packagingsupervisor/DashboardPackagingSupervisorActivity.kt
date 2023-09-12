@@ -63,4 +63,7 @@ class DashboardPackagingSupervisorActivity : ComponentActivity() {
             }
         }
     }
+    override fun onBackPressed() {
+        onBackPressedDispatcher.onBackPressed() // with this line
+    }
 }

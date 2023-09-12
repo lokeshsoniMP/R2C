@@ -9,6 +9,7 @@ import com.jsw.r2c.presentation.screens.dashboard.DashBoardScreen
 
 sealed class DashBoardNavigationRoute(val route: String) {
     object Home : DashBoardNavigationRoute("home_screen")
+    object Logout : DashBoardNavigationRoute("Logout_screen")
     object ManagerDashaBoardScreen : DashBoardNavigationRoute("manager_dashboard_screen")
     object CreateRequisition : DashBoardNavigationRoute("requisition_screen")
     object ProductionHeadDashBoardScreen : DashBoardNavigationRoute("production_head_dashboard_screen")
