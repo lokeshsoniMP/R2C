@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">R2C</string>
+    <string name="r2c2">R2C2</string>
+    <string name="app_desc">Requisition Management System</string>
+    <string name="enter_your_email_address">Enter your email address</string>
+    <string name="enter_your_pass">Enter your password here</string>
+    <string name="remember_me">Remember Me</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="login">Login</string>
+    <string name="title_activity_dashboard">DashboardActivity</string>
+    <string name="submit">Submit</string>
+</resources>
