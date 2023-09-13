@@ -10,6 +10,7 @@ import com.jsw.r2c.repository.RequisitionRepository
 import com.jsw.r2c.retrofit.request.requisition.CreateRequisitionRequest
 import com.jsw.r2c.retrofit.response.material.MaterialResponse
 import com.jsw.r2c.retrofit.response.material.materialDetail.MaterialDetailResponse
+import com.jsw.r2c.retrofit.response.notification.NotificationResponse
 import com.jsw.r2c.retrofit.response.plant.PlantResponse
 import com.jsw.r2c.retrofit.response.requisition.RequisitionListResponse
 import com.jsw.r2c.retrofit.response.requisition.RequisitionResponse
@@ -45,6 +46,9 @@ class RequisitionViewModel @Inject constructor(private val requisitionRepository
     val approveStatusResponse: MutableState<ApiState<RequisitionApproveStatusResponse>> =
         mutableStateOf(ApiState.Empty)
 
+    val getNotification: MutableState<ApiState<NotificationResponse>> =
+        mutableStateOf(ApiState.Empty)
+
     fun getMaterial() = viewModelScope.launch {
         requisitionRepository.getMaterials().onStart {
             materialIdResponse.value = ApiState.Loading
@@ -54,6 +58,18 @@ class RequisitionViewModel @Inject constructor(private val requisitionRepository
 
         }.collect {
             materialIdResponse.value = ApiState.Success(it)
+        }
+    }
+
+    fun getNotificationResponse() = viewModelScope.launch {
+        requisitionRepository.getNotification().onStart {
+            getNotification.value = ApiState.Loading
+        }.catch {
+
+            getNotification.value = ApiState.Failure(API_ERROR_MSG)
+
+        }.collect {
+            getNotification.value = ApiState.Success(it)
         }
     }
 

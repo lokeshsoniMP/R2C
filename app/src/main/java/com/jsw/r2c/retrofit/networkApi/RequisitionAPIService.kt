@@ -4,6 +4,7 @@ import com.jsw.r2c.retrofit.request.auth.LoginRequest
 import com.jsw.r2c.retrofit.request.requisition.CreateRequisitionRequest
 import com.jsw.r2c.retrofit.response.material.MaterialResponse
 import com.jsw.r2c.retrofit.response.material.materialDetail.MaterialDetailResponse
+import com.jsw.r2c.retrofit.response.notification.NotificationResponse
 import com.jsw.r2c.retrofit.response.plant.PlantResponse
 import com.jsw.r2c.retrofit.response.requisition.RequisitionListResponse
 import com.jsw.r2c.retrofit.response.requisition.RequisitionResponse
@@ -18,7 +19,6 @@ import retrofit2.http.Query
 
 interface RequisitionAPIService {
 
-
     @GET("Requisition/GetRequisitions")
     suspend fun GetRequisitionsList(
     ): RequisitionListResponse
@@ -27,6 +27,10 @@ interface RequisitionAPIService {
     suspend fun GetMaterials(
     ): MaterialResponse
 
+
+    @GET("Notifications/GetNotifications")
+    suspend fun GetNotification(
+    ): NotificationResponse
     @GET("Materials/GetMaterialDetails?id={id}")
     suspend fun GetMaterialDetailById(
         @Path("id") userId: Int?,

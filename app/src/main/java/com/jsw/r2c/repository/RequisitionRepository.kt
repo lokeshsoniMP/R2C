@@ -4,6 +4,7 @@ import com.jsw.r2c.retrofit.networkApi.RequisitionAPIService
 import com.jsw.r2c.retrofit.request.requisition.CreateRequisitionRequest
 import com.jsw.r2c.retrofit.response.material.MaterialResponse
 import com.jsw.r2c.retrofit.response.material.materialDetail.MaterialDetailResponse
+import com.jsw.r2c.retrofit.response.notification.NotificationResponse
 import com.jsw.r2c.retrofit.response.plant.PlantResponse
 import com.jsw.r2c.retrofit.response.requisition.RequisitionListResponse
 import com.jsw.r2c.retrofit.response.requisition.RequisitionResponse
@@ -22,6 +23,10 @@ class RequisitionRepository @Inject constructor(
 
     fun getMaterials(): Flow<MaterialResponse> = flow {
         emit(requisitionApiService.GetMaterials())
+    }
+
+    fun getNotification(): Flow<NotificationResponse> = flow {
+        emit(requisitionApiService.GetNotification())
     }
 
     fun getMaterialGroup(id: Int): Flow<MaterialDetailResponse> = flow {
