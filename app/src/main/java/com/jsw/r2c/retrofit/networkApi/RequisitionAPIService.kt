@@ -56,7 +56,7 @@ interface RequisitionAPIService {
     ): RequisitionResponse
 
 
-    @POST("Requisition/{requistion_id}/status?requisitionStatus=1&approver=manager%40gmail.com")
+    @POST("Requisition/{requistion_id}/status?requisitionStatus={requisitionStatus}&approver={approver}")
     suspend fun ApproveRequisitionStatus(
         @Path("requistion_id") requistion_id: Int?,
         @Query("requisitionStatus") requisitionStatus: Int?,
