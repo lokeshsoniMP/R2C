@@ -8,12 +8,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.auth0.android.jwt.JWT
 import com.jsw.r2c.base.ResponseConst.API_ERROR_MSG
-import com.jsw.r2c.data.model.UserModel
+
 import com.jsw.r2c.datastore.AuthDataStoreManager
 import com.jsw.r2c.repository.AuthRepository
 import com.jsw.r2c.retrofit.request.auth.LoginRequest
 import com.jsw.r2c.retrofit.response.auth.LoginResponse
-import com.jsw.r2c.retrofit.response.material.MaterialResponse
+
 import com.jsw.r2c.retrofit.utlis.ApiState
 import com.jsw.r2c.room.dao.AuthDao
 

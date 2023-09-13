@@ -66,8 +66,6 @@ interface RequisitionAPIService {
     @POST("Requisition/{requistion_id}")
     suspend fun GetRequisitionDetails(
         @Path("requistion_id") requistion_id: Int?
-
-
     ): TrackingResponse
 
 }
