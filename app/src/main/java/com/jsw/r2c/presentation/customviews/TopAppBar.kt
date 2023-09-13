@@ -29,7 +29,7 @@ import com.jsw.r2c.presentation.theme.BlueDark
 import com.jsw.r2c.presentation.theme.Kefa
 
 @Composable
-fun TopAppBarR2C(onClickHamBurger: () -> Unit = {},onClickIcon: () -> Unit = {}) {
+fun TopAppBarR2C(onClickHamBurger: () -> Unit = {},onClickNotification: () -> Unit = {}) {
 
     Row(
         modifier = Modifier
@@ -86,7 +86,7 @@ fun TopAppBarR2C(onClickHamBurger: () -> Unit = {},onClickIcon: () -> Unit = {})
                 modifier = Modifier
                     .size(28.dp)
                     .clickable {
-                        onClickIcon.invoke()
+                        onClickNotification.invoke()
 
                     },
 

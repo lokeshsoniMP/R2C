@@ -147,14 +147,7 @@ fun DashBoardMainScreen() {
                 }
             })
 
-            TopAppBarR2C(onClickIcon = {
-                scope.launch {
-                   /* val intent =
-                        Intent(this, TrackingRequisitionScreen::class.java)
-                    startActivity(intent)
-                    finish()*/
-                }
-            })
+
 
 
         }) {

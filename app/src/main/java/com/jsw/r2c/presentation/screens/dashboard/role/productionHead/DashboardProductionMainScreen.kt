@@ -28,6 +28,8 @@ import com.jsw.r2c.presentation.screens.dashboard.navigation.DashBoardNavigation
 import com.jsw.r2c.presentation.screens.dashboard.navigation.NavigationItem
 import kotlinx.coroutines.launch
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -62,8 +64,7 @@ fun DashBoardProductionMainScreen(authViewModel: AuthViewModel = hiltViewModel()
             selectedIcon = Icons.Filled.Home,
             unselectedIcon = Icons.Outlined.Home,
             route = DashBoardNavigationRoute.RequisitionDashBoardScreen.route
-        )
-        ,
+        ),
         NavigationItem(
             title = "Tracking",
             selectedIcon = Icons.Filled.Home,
@@ -78,6 +79,14 @@ fun DashBoardProductionMainScreen(authViewModel: AuthViewModel = hiltViewModel()
         )
 
     )
+    var isNotificationClicked by remember {
+        mutableStateOf(false)
+    }
+    if (isNotificationClicked) {
+        navController.navigate(DashBoardNavigationRoute.NotificationScreen.route)
+    } else {
+        navController.popBackStack()
+    }
     ModalNavigationDrawer(
         drawerContent = {
             ModalDrawerSheet {
@@ -107,6 +116,8 @@ fun DashBoardProductionMainScreen(authViewModel: AuthViewModel = hiltViewModel()
                 scope.launch {
                     drawerState.open()
                 }
+            }, onClickNotification = {
+                isNotificationClicked = !isNotificationClicked
             })
 
 
@@ -131,6 +142,9 @@ fun DashBoardProductionMainScreen(authViewModel: AuthViewModel = hiltViewModel()
                     }
                     composable(DashBoardNavigationRoute.RequisitionDashBoardScreen.route) {
                         RequisitionDashboardProductionHead()
+                    }
+                    composable(DashBoardNavigationRoute.NotificationScreen.route) {
+                        NotificationScreen(navController)
                     }
                     composable(DashBoardNavigationRoute.Logout.route) {
                         authViewModel.removeUserAppLoginPref()
