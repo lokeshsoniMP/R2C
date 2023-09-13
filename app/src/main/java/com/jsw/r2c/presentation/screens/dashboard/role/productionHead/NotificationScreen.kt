@@ -20,6 +20,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -129,6 +130,10 @@ fun NotificationScreen(
 
         when (requisitionViewModel.getNotification.value) {
             ApiState.Loading -> {
+                CircularProgressIndicator(
+                    color = Color.White,
+                    modifier = Modifier.padding(4.dp)
+                )
             }
 
             is ApiState.Success -> {
