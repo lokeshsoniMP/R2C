@@ -40,6 +40,7 @@ import com.jsw.r2c.presentation.screens.dashboard.navigation.NavigationItem
 import com.jsw.r2c.presentation.screens.dashboard.role.managerApproval.ManagerMainDashBoardScreen
 import com.jsw.r2c.presentation.screens.dashboard.role.productionHead.DashBoardProductionMainScreen
 import com.jsw.r2c.presentation.screens.dashboard.role.storeIncharge.StoreInChargeMainDashBoardScreen
+import com.jsw.r2c.presentation.screens.dashboard.role.transport.TransPortMainDashBoardScreen
 
 import com.jsw.r2c.presentation.theme.R2CTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -57,7 +58,7 @@ class DashboardTransportPersonActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    StoreInChargeMainDashBoardScreen()
+                    TransPortMainDashBoardScreen()
 
                  }
             }

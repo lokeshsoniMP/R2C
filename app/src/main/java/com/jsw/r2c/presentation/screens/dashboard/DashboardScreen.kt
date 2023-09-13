@@ -120,6 +120,9 @@ fun DashBoardScreen(navController: NavController, viewModel: AuthViewModel = hil
                     painter = painterResource(id = R.drawable.scan_qr),
                     contentDescription = "requisition",
                     modifier = Modifier.size(42.dp)
+                        .clickable {
+                            navController.navigate(DashBoardNavigationRoute.GoodsScanScreen.route)
+                        },
                 )
                 Spacer(modifier = Modifier.padding(12.dp))
                 Text(text = "Scan Goods Issue Note")

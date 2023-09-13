@@ -1,6 +1,7 @@
 package com.jsw.r2c.presentation.activities.storeincharge
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -34,6 +35,10 @@ class DashboardStoreInchargeActivity : ComponentActivity() {
         }
     }
     override fun onBackPressed() {
-        onBackPressedDispatcher.onBackPressed() // with this line
+        onBackPressedDispatcher.onBackPressed()
+        finish()
     }
+
+
+
 }

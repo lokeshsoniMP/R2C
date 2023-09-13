@@ -1,4 +1,4 @@
-package com.jsw.r2c.presentation.screens.dashboard.role.managerApproval
+package com.jsw.r2c.presentation.screens.dashboard.role.gatekeeper
 
 import android.app.Activity
 import android.content.Intent
@@ -17,8 +17,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -36,19 +39,23 @@ import com.jsw.r2c.presentation.customviews.TopAppBarR2C
 import com.jsw.r2c.presentation.screens.auth.LoginScreen
 import com.jsw.r2c.presentation.screens.dashboard.navigation.DashBoardNavigationRoute
 import com.jsw.r2c.presentation.screens.dashboard.navigation.NavigationItem
+import com.jsw.r2c.presentation.screens.dashboard.role.productionHead.NotificationScreen
 import com.jsw.r2c.presentation.screens.dashboard.role.productionHead.RequisitionDashboardProductionHead
 import com.jsw.r2c.presentation.screens.dashboard.role.productionHead.RequisitionScreen
 import com.jsw.r2c.presentation.viewmodels.features.auth.AuthViewModel
 import kotlinx.coroutines.launch
 
 @Composable
-fun ManagerMainDashBoardScreen(authViewModel: AuthViewModel = hiltViewModel()) {
+fun GateKeeperMainDashBoardScreen(authViewModel: AuthViewModel = hiltViewModel()) {
+
+
     val navController = rememberNavController()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     var selectedItemIndex by rememberSaveable {
         mutableIntStateOf(0)
     }
     val context = LocalContext.current
+
     val systemUiController: SystemUiController = rememberSystemUiController()
     val scope = rememberCoroutineScope()
     val items = listOf(
@@ -72,6 +79,14 @@ fun ManagerMainDashBoardScreen(authViewModel: AuthViewModel = hiltViewModel()) {
         )
 
     )
+    var isNotificationClicked by remember {
+        mutableStateOf(false)
+    }
+    if (isNotificationClicked) {
+        navController.navigate(DashBoardNavigationRoute.NotificationScreen.route)
+    } else {
+        navController.popBackStack()
+    }
     ModalNavigationDrawer(
         drawerContent = {
             ModalDrawerSheet {
@@ -101,7 +116,10 @@ fun ManagerMainDashBoardScreen(authViewModel: AuthViewModel = hiltViewModel()) {
                 scope.launch {
                     drawerState.open()
                 }
+            }, onClickNotification = {
+                isNotificationClicked = !isNotificationClicked
             })
+
 
 
         }) {
@@ -118,11 +136,10 @@ fun ManagerMainDashBoardScreen(authViewModel: AuthViewModel = hiltViewModel()) {
                     startDestination = DashBoardNavigationRoute.Home.route
                 ) {
                     composable(DashBoardNavigationRoute.Home.route) {
-                        ManagerDashBoardApprovalScreen(navController)
+                        GateKeeperDashboardScreen(navController)
                     }
-
-                    composable(DashBoardNavigationRoute.RequisitionDashBoardScreen.route) {
-                        RequisitionDashboardProductionHead()
+                    composable(DashBoardNavigationRoute.NotificationScreen.route) {
+                        NotificationScreen(navController)
                     }
                     composable(DashBoardNavigationRoute.Logout.route) {
 
@@ -134,6 +151,7 @@ fun ManagerMainDashBoardScreen(authViewModel: AuthViewModel = hiltViewModel()) {
                         }
 
                     }
+
 
                 }
             }

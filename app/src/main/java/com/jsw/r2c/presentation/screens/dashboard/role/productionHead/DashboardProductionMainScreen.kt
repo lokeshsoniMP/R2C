@@ -1,6 +1,8 @@
 package com.jsw.r2c.presentation.screens.dashboard.role.productionHead
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -28,16 +30,20 @@ import com.jsw.r2c.presentation.screens.dashboard.navigation.DashBoardNavigation
 import com.jsw.r2c.presentation.screens.dashboard.navigation.NavigationItem
 import kotlinx.coroutines.launch
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.jsw.r2c.presentation.activities.MainActivity
 import com.jsw.r2c.presentation.screens.auth.LoginScreen
 import com.jsw.r2c.presentation.screens.dashboard.DashBoardScreen
+import com.jsw.r2c.presentation.screens.dashboard.role.gatekeeper.GatePassApprovalScreen
 import com.jsw.r2c.presentation.viewmodels.features.auth.AuthViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -49,6 +55,7 @@ fun DashBoardProductionMainScreen(authViewModel: AuthViewModel = hiltViewModel()
     var selectedItemIndex by rememberSaveable {
         mutableIntStateOf(0)
     }
+    val context = LocalContext.current
     val systemUiController: SystemUiController = rememberSystemUiController()
 
     val scope = rememberCoroutineScope()
@@ -69,7 +76,7 @@ fun DashBoardProductionMainScreen(authViewModel: AuthViewModel = hiltViewModel()
             title = "Tracking",
             selectedIcon = Icons.Filled.Home,
             unselectedIcon = Icons.Outlined.Home,
-            route = DashBoardNavigationRoute.ManagerDashaBoardScreen.route
+            route = DashBoardNavigationRoute.RequisitionDashBoardScreen.route
         ),
         NavigationItem(
             title = "Logout",
@@ -146,9 +153,17 @@ fun DashBoardProductionMainScreen(authViewModel: AuthViewModel = hiltViewModel()
                     composable(DashBoardNavigationRoute.NotificationScreen.route) {
                         NotificationScreen(navController)
                     }
+                    composable(DashBoardNavigationRoute.GoodsScanScreen.route) {
+                        GoodsScanScreen(navController)
+                    }
                     composable(DashBoardNavigationRoute.Logout.route) {
-                        authViewModel.removeUserAppLoginPref()
-                        LoginScreen()
+
+                        LaunchedEffect(key1 = Unit) {
+                            authViewModel.removeUserAppLoginPref()
+                            val intent = Intent(context, MainActivity::class.java)
+                            context.startActivity(intent)
+                            (context as Activity).finish()
+                        }
 
                     }
 

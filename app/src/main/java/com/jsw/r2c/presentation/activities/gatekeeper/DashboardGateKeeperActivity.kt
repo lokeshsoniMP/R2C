@@ -37,6 +37,7 @@ import com.jsw.r2c.presentation.screens.dashboard.DashBoardScreen
 import com.jsw.r2c.presentation.screens.dashboard.navigation.DashBoardNavigationRoute
 
 import com.jsw.r2c.presentation.screens.dashboard.navigation.NavigationItem
+import com.jsw.r2c.presentation.screens.dashboard.role.gatekeeper.GateKeeperMainDashBoardScreen
 import com.jsw.r2c.presentation.screens.dashboard.role.managerApproval.ManagerMainDashBoardScreen
 import com.jsw.r2c.presentation.screens.dashboard.role.productionHead.DashBoardProductionMainScreen
 import com.jsw.r2c.presentation.screens.dashboard.role.storeIncharge.StoreInChargeMainDashBoardScreen
@@ -57,13 +58,14 @@ class DashboardGateKeeperActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    StoreInChargeMainDashBoardScreen()
+                    GateKeeperMainDashBoardScreen()
 
                  }
             }
         }
     }
     override fun onBackPressed() {
-        onBackPressedDispatcher.onBackPressed() // with this line
+        onBackPressedDispatcher.onBackPressed()
+        finish()
     }
 }

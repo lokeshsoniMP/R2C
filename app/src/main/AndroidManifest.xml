@@ -50,6 +50,11 @@
             android:exported="false"
             android:label="@string/title_activity_dashboard"
             android:theme="@style/Theme.R2C" />
+        <activity
+            android:name=".presentation.activities.gatekeeper.GatePassApprovalScreen"
+            android:exported="false"
+            android:label="@string/title_activity_dashboard"
+            android:theme="@style/Theme.R2C" />
          <activity
             android:name=".presentation.activities.transportperson.DashboardTransportPersonActivity"
             android:exported="false"

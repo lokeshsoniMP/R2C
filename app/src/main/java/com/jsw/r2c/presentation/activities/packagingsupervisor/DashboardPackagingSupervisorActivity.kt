@@ -38,6 +38,7 @@ import com.jsw.r2c.presentation.screens.dashboard.navigation.DashBoardNavigation
 
 import com.jsw.r2c.presentation.screens.dashboard.navigation.NavigationItem
 import com.jsw.r2c.presentation.screens.dashboard.role.managerApproval.ManagerMainDashBoardScreen
+import com.jsw.r2c.presentation.screens.dashboard.role.packagingsupervisor.PackagingSupervisorMainDashBoardScreen
 import com.jsw.r2c.presentation.screens.dashboard.role.productionHead.DashBoardProductionMainScreen
 import com.jsw.r2c.presentation.screens.dashboard.role.storeIncharge.StoreInChargeMainDashBoardScreen
 
@@ -57,7 +58,7 @@ class DashboardPackagingSupervisorActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    StoreInChargeMainDashBoardScreen()
+                    PackagingSupervisorMainDashBoardScreen()
 
                  }
             }

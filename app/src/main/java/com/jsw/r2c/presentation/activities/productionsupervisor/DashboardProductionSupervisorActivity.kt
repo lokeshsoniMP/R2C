@@ -38,6 +38,7 @@ import com.jsw.r2c.presentation.screens.dashboard.navigation.DashBoardNavigation
 
 import com.jsw.r2c.presentation.screens.dashboard.navigation.NavigationItem
 import com.jsw.r2c.presentation.screens.dashboard.role.productionHead.DashBoardProductionMainScreen
+import com.jsw.r2c.presentation.screens.dashboard.role.productionsupervisor.ProductionSupervisorMainDashBoardScreen
 
 import com.jsw.r2c.presentation.theme.R2CTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -58,7 +59,7 @@ class DashboardProductionSupervisorActivity : ComponentActivity() {
                 ) {
 
 
-                    DashBoardProductionMainScreen()
+                    ProductionSupervisorMainDashBoardScreen()
                 }
             }
         }
