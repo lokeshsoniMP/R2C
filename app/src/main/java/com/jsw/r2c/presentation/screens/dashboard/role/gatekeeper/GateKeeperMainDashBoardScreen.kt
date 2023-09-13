@@ -42,6 +42,7 @@ import com.jsw.r2c.presentation.screens.dashboard.navigation.NavigationItem
 import com.jsw.r2c.presentation.screens.dashboard.role.productionHead.NotificationScreen
 import com.jsw.r2c.presentation.screens.dashboard.role.productionHead.RequisitionDashboardProductionHead
 import com.jsw.r2c.presentation.screens.dashboard.role.productionHead.RequisitionScreen
+import com.jsw.r2c.presentation.screens.tracking.TrackingRequisitionScreen
 import com.jsw.r2c.presentation.viewmodels.features.auth.AuthViewModel
 import kotlinx.coroutines.launch
 
@@ -69,7 +70,7 @@ fun GateKeeperMainDashBoardScreen(authViewModel: AuthViewModel = hiltViewModel()
             title = "Tracking",
             selectedIcon = Icons.Filled.Home,
             unselectedIcon = Icons.Outlined.Home,
-            route = DashBoardNavigationRoute.RequisitionDashBoardScreen.route
+            route = DashBoardNavigationRoute.TrackingRequisitionScreen.route
         ),
         NavigationItem(
             title = "Logout",
@@ -137,6 +138,9 @@ fun GateKeeperMainDashBoardScreen(authViewModel: AuthViewModel = hiltViewModel()
                 ) {
                     composable(DashBoardNavigationRoute.Home.route) {
                         GateKeeperDashboardScreen(navController)
+                    }
+                    composable(DashBoardNavigationRoute.TrackingRequisitionScreen.route) {
+                        TrackingRequisitionScreen(navController)
                     }
                     composable(DashBoardNavigationRoute.NotificationScreen.route) {
                         NotificationScreen(navController)

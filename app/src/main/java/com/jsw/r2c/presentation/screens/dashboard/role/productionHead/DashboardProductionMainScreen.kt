@@ -44,6 +44,7 @@ import com.jsw.r2c.presentation.activities.MainActivity
 import com.jsw.r2c.presentation.screens.auth.LoginScreen
 import com.jsw.r2c.presentation.screens.dashboard.DashBoardScreen
 import com.jsw.r2c.presentation.screens.dashboard.role.gatekeeper.GatePassApprovalScreen
+import com.jsw.r2c.presentation.screens.tracking.TrackingRequisitionScreen
 import com.jsw.r2c.presentation.viewmodels.features.auth.AuthViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -66,17 +67,12 @@ fun DashBoardProductionMainScreen(authViewModel: AuthViewModel = hiltViewModel()
             unselectedIcon = Icons.Outlined.Home,
             route = DashBoardNavigationRoute.Home.route
         ),
-        NavigationItem(
-            title = "Dashboard",
-            selectedIcon = Icons.Filled.Home,
-            unselectedIcon = Icons.Outlined.Home,
-            route = DashBoardNavigationRoute.RequisitionDashBoardScreen.route
-        ),
+
         NavigationItem(
             title = "Tracking",
             selectedIcon = Icons.Filled.Home,
             unselectedIcon = Icons.Outlined.Home,
-            route = DashBoardNavigationRoute.RequisitionDashBoardScreen.route
+            route = DashBoardNavigationRoute.TrackingRequisitionScreen.route
         ),
         NavigationItem(
             title = "Logout",
@@ -149,6 +145,9 @@ fun DashBoardProductionMainScreen(authViewModel: AuthViewModel = hiltViewModel()
                     }
                     composable(DashBoardNavigationRoute.RequisitionDashBoardScreen.route) {
                         RequisitionDashboardProductionHead()
+                    }
+                    composable(DashBoardNavigationRoute.TrackingRequisitionScreen.route) {
+                        TrackingRequisitionScreen(navController)
                     }
                     composable(DashBoardNavigationRoute.NotificationScreen.route) {
                         NotificationScreen(navController)

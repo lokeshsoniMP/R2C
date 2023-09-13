@@ -9,5 +9,7 @@
     <string name="login">Login</string>
     <string name="title_activity_dashboard">DashboardActivity</string>
     <string name="submit">Submit</string>
-    <string name="assign_supervise">AssignSupervise</string>
+    <string name="assign_supervise">Assign Supervisor</string>
+    <string name="Conform_supervise">Conform Supervisor</string>
+    <string name="assign_gni">Create GIN</string>
 </resources>

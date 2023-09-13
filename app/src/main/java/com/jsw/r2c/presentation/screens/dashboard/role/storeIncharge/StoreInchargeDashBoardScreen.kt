@@ -2,7 +2,7 @@ package com.jsw.r2c.presentation.screens.dashboard.role.storeIncharge
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.util.Log
+import android.content.Intent
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -39,13 +39,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.jsw.r2c.R
 import com.jsw.r2c.base.Utilis
-import com.jsw.r2c.presentation.screens.dashboard.role.RequisitionRequest
+import com.jsw.r2c.presentation.screens.dashboard.navigation.DashBoardNavigationRoute
 import com.jsw.r2c.presentation.screens.dashboard.role.RequisitionText
 import com.jsw.r2c.presentation.theme.BlueDark
 import com.jsw.r2c.presentation.theme.Kefa
 import com.jsw.r2c.presentation.viewmodels.features.auth.AuthViewModel
 import com.jsw.r2c.presentation.viewmodels.features.requisition.RequisitionViewModel
-import com.jsw.r2c.retrofit.request.requisition.CreateRequisitionRequest
 import com.jsw.r2c.retrofit.response.material.MaterialResponse
 import com.jsw.r2c.retrofit.response.material.MaterialResponseItem
 import com.jsw.r2c.retrofit.response.plant.PlantResponse
@@ -56,8 +55,6 @@ import com.jsw.r2c.retrofit.response.storage.StorageLocationResponse
 import com.jsw.r2c.retrofit.response.unit.UnitTypeResponse
 import com.jsw.r2c.retrofit.response.unit.UnitTypeResponseItem
 import com.jsw.r2c.retrofit.utlis.ApiState
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -314,6 +311,7 @@ fun StoreInchargeDashBoardScreen(
                     Button(
                         modifier = Modifier.fillMaxWidth(),
                         onClick = {
+                            navController.navigate(DashBoardNavigationRoute.AssignSuperviser.route)
 
                         },
                         colors = ButtonDefaults.buttonColors(
@@ -422,3 +420,5 @@ fun StoreInchargeDashBoardScreen(
 
 
 }
+
+

@@ -12,7 +12,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -209,7 +211,8 @@ fun PackageSupervisorDashBoardScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .border(2.dp, BlueDark, RoundedCornerShape(8))
-                        .padding(16.dp),
+                        .padding(16.dp)
+                        .verticalScroll(rememberScrollState()),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.Start
                 ) {
@@ -306,21 +309,6 @@ fun PackageSupervisorDashBoardScreen(
                         }?.plantName ?: ""
                     )
 
-                    Button(
-                        modifier = Modifier.fillMaxWidth(),
-                        onClick = {
-
-                        },
-                        colors = ButtonDefaults.buttonColors(
-                            disabledContainerColor = BlueDark,
-                            containerColor = BlueDark
-                        ), shape = RoundedCornerShape(12)
-
-                    ) {
-                        Text(text = stringResource(R.string.assign_supervise), color = Color.White)
-                    }
-
-
                     LaunchedEffect(key1 = Unit) {
                         requisitionViewModel.getStorageLocation(
                             requisitionList.get(
@@ -364,48 +352,20 @@ fun PackageSupervisorDashBoardScreen(
                         valueColor = Color(0xFF851D1D)
                     )
 
-                    Row(modifier = Modifier.fillMaxWidth()) {
-                        Button(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .weight(0.5f)
-                                .padding(horizontal = 10.dp), onClick = {
-                                requisitionViewModel.changeRequisitionRequestStatus(
-                                    requisitionId = requisitionList.get(
-                                        requisitionRequestIndex
-                                    ).id, approver = authViewModel.getUser().name, status = 0
-                                )
+                    Button(
+                        modifier = Modifier.fillMaxWidth(),
+                        onClick = {
 
-                                requisitionViewModel.getRequisitionList()
-                            }, colors = ButtonDefaults.buttonColors(
-                                disabledContainerColor = Color.Red,
-                                containerColor = Color(0xFF851D1D)
-                            ), shape = RoundedCornerShape(12)
+                        },
+                        colors = ButtonDefaults.buttonColors(
+                            disabledContainerColor = BlueDark,
+                            containerColor = BlueDark
+                        ), shape = RoundedCornerShape(12)
 
-                        ) {
-                            Text(text = "Cancel", color = Color.White)
-                        }
-                        Button(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .weight(0.5f)
-                                .padding(horizontal = 10.dp), onClick = {
-
-                                requisitionViewModel.changeRequisitionRequestStatus(
-                                    requisitionId = requisitionList.get(
-                                        requisitionRequestIndex
-                                    ).id, approver = authViewModel.getUser().name, status = 1
-                                )
-                                requisitionViewModel.getRequisitionList()
-                            }, colors = ButtonDefaults.buttonColors(
-                                disabledContainerColor = Color.Green,
-                                containerColor = Color(0xFF38851D)
-                            ), shape = RoundedCornerShape(12)
-
-                        ) {
-                            Text(text = "Approve", color = Color.White)
-                        }
+                    ) {
+                        Text(text = stringResource(R.string.assign_gni), color = Color.White)
                     }
+
 
                 }
             }

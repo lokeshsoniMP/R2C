@@ -13,8 +13,8 @@ object UserType{
     const val AS_STOREINCHAREGE :String="StoreIncharge"
     const val AS_PACKAGINGSUPERVISOR :String="PackingSupervisor"
     const val AS_TRASPORTPERSON :String="TransportPerson"
-    const val AS_GATEKEEPER :String="GateKeeper"
-    const val AS_PRODUCTIONSUPERVISOR :String="PackingSupervisor"
+    const val AS_GATEKEEPER :String="Gatekeeper"
+    const val AS_PRODUCTIONSUPERVISOR :String="ProductionSupervisor"
 
 }
 

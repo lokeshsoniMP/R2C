@@ -238,7 +238,7 @@ fun LoginScreen(viewModel: AuthViewModel = hiltViewModel()) {
                                         val intent =
                                             Intent(
                                                 context,
-                                                DashboardProductionHeadActivity::class.java
+                                                DashboardProductionSupervisorActivity::class.java
                                             )
                                         context.startActivity(intent)
                                         (context as Activity).finish()
@@ -295,7 +295,7 @@ fun LoginScreen(viewModel: AuthViewModel = hiltViewModel()) {
                                         val intent =
                                             Intent(
                                                 context,
-                                                DashboardProductionSupervisorActivity::class.java
+                                                DashboardProductionHeadActivity::class.java
                                             )
                                         context.startActivity(intent)
                                         (context as Activity).finish()

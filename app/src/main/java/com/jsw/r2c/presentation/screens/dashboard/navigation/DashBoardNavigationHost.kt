@@ -23,4 +23,5 @@ sealed class DashBoardNavigationRoute(val route: String) {
     object NotificationScreen: DashBoardNavigationRoute("notification_dashboard_screen")
     object TransportNotificationScreen: DashBoardNavigationRoute("transport_notification_screen")
     object GoodsScanScreen: DashBoardNavigationRoute("goods_scan_screen")
+    object AssignSuperviser: DashBoardNavigationRoute("Assign_superviser_screen")
 }

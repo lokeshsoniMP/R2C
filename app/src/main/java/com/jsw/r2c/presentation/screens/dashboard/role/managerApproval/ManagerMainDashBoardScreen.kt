@@ -19,6 +19,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -36,6 +38,7 @@ import com.jsw.r2c.presentation.customviews.TopAppBarR2C
 import com.jsw.r2c.presentation.screens.auth.LoginScreen
 import com.jsw.r2c.presentation.screens.dashboard.navigation.DashBoardNavigationRoute
 import com.jsw.r2c.presentation.screens.dashboard.navigation.NavigationItem
+import com.jsw.r2c.presentation.screens.dashboard.role.productionHead.NotificationScreen
 import com.jsw.r2c.presentation.screens.dashboard.role.productionHead.RequisitionDashboardProductionHead
 import com.jsw.r2c.presentation.screens.dashboard.role.productionHead.RequisitionScreen
 import com.jsw.r2c.presentation.screens.tracking.TrackingRequisitionScreen
@@ -73,6 +76,16 @@ fun ManagerMainDashBoardScreen(authViewModel: AuthViewModel = hiltViewModel()) {
         )
 
     )
+
+    var isNotificationClicked by remember {
+        mutableStateOf(false)
+    }
+    if (isNotificationClicked) {
+        navController.navigate(DashBoardNavigationRoute.NotificationScreen.route)
+    } else {
+        navController.popBackStack()
+    }
+
     ModalNavigationDrawer(
         drawerContent = {
             ModalDrawerSheet {
@@ -102,7 +115,10 @@ fun ManagerMainDashBoardScreen(authViewModel: AuthViewModel = hiltViewModel()) {
                 scope.launch {
                     drawerState.open()
                 }
-            })
+            }, onClickNotification = {
+            isNotificationClicked = !isNotificationClicked
+        })
+
 
 
         }) {
@@ -124,6 +140,9 @@ fun ManagerMainDashBoardScreen(authViewModel: AuthViewModel = hiltViewModel()) {
 
                     composable(DashBoardNavigationRoute.TrackingRequisitionScreen.route) {
                         TrackingRequisitionScreen(navController)
+                    }
+                    composable(DashBoardNavigationRoute.NotificationScreen.route) {
+                        NotificationScreen(navController)
                     }
                     composable(DashBoardNavigationRoute.Logout.route) {
 

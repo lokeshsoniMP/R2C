@@ -59,8 +59,7 @@ class MainActivity : ComponentActivity() {
                     if (isLoggedIn.value) {
                         when (auth.getUser().role) {
                             UserType.PRODUCTION_HEAD -> {
-                                val intent =
-                                    Intent(this, DashboardProductionHeadActivity::class.java)
+                                val intent = Intent(this, DashboardProductionSupervisorActivity::class.java)
                                 context.startActivity(intent)
                                 (context as Activity).finish()
                             }
@@ -101,7 +100,9 @@ class MainActivity : ComponentActivity() {
                             }
 
                             UserType.AS_PRODUCTIONSUPERVISOR -> {
-                                val intent = Intent(this, DashboardProductionSupervisorActivity::class.java)
+                                val intent =
+                                    Intent(this, DashboardProductionHeadActivity::class.java)
+
                                 context.startActivity(intent)
                                 (context as Activity).finish()
                             }
