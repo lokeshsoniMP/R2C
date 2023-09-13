@@ -1,6 +1,9 @@
 package com.jsw.r2c.presentation.screens.dashboard.role.storeIncharge
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.util.Log
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,8 +28,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
 
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -51,15 +56,18 @@ import com.jsw.r2c.retrofit.response.storage.StorageLocationResponse
 import com.jsw.r2c.retrofit.response.unit.UnitTypeResponse
 import com.jsw.r2c.retrofit.response.unit.UnitTypeResponseItem
 import com.jsw.r2c.retrofit.utlis.ApiState
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun StoreInchargeDashBoardScreen(navController: NavController,
-                                 requisitionViewModel: RequisitionViewModel = hiltViewModel(),
-                                 authViewModel: AuthViewModel = hiltViewModel()
+fun StoreInchargeDashBoardScreen(
+    navController: NavController,
+    requisitionViewModel: RequisitionViewModel = hiltViewModel(),
+    authViewModel: AuthViewModel = hiltViewModel()
 ) {
-
+    val context = LocalContext.current
+    val coroutine = rememberCoroutineScope()
     var requisitionList = rememberSaveable {
         mutableListOf<RequisitionListResponseItem>()
     }
@@ -76,6 +84,11 @@ fun StoreInchargeDashBoardScreen(navController: NavController,
         mutableStateOf(0)
     }
 
+    BackHandler() {
+        navController.popBackStack()
+        (context as Activity).finish()
+
+    }
     LaunchedEffect(key1 = Unit) {
         requisitionViewModel.getRequisitionList()
         requisitionViewModel.getMaterial()
@@ -188,7 +201,7 @@ fun StoreInchargeDashBoardScreen(navController: NavController,
             )
         ) {
             Text(
-                text = "Welcome\n ${authViewModel.getUser().name}",
+                text = "Welcome\n ${authViewModel.getUser().name?:""}",
                 fontSize = 24.sp,
                 color = Color.Black,
                 fontFamily = Kefa,

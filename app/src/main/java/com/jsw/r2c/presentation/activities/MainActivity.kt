@@ -18,6 +18,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.jsw.r2c.base.UserType
 import com.jsw.r2c.presentation.activities.gatekeeper.DashboardGateKeeperActivity
@@ -42,6 +43,7 @@ class MainActivity : ComponentActivity() {
 
     val auth: AuthViewModel by viewModels()
 
+
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "RememberReturnType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,56 +55,55 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val isLoggedIn = auth.authDataStore.getUserLogInState.collectAsState(false)
-
+                    val context= LocalContext.current
                     if (isLoggedIn.value) {
                         when (auth.getUser().role) {
                             UserType.PRODUCTION_HEAD -> {
                                 val intent =
                                     Intent(this, DashboardProductionHeadActivity::class.java)
-                                startActivity(intent)
-                                finish()
+                                context.startActivity(intent)
+                                (context as Activity).finish()
                             }
 
                             UserType.AS_MANAGER_HEAD -> {
                                 val intent =
                                     Intent(this, DashboardManagerApprovalactivity::class.java)
-                                startActivity(intent)
-                                finish()
+                                context.startActivity(intent)
+                                (context as Activity).finish()
                             }
 
                             UserType.AS_STOREINCHAREGE -> {
                                 val intent =
                                     Intent(this, DashboardStoreInchargeActivity::class.java)
-                                startActivity(intent)
-                                finish()
+                                context.startActivity(intent)
+                                (context as Activity).finish()
                             }
 
                             UserType.AS_PACKAGINGSUPERVISOR -> {
                                 val intent =
                                     Intent(this, DashboardPackagingSupervisorActivity::class.java)
-                                startActivity(intent)
-                                finish()
+                                context.startActivity(intent)
+                                (context as Activity).finish()
                             }
 
                             UserType.AS_TRASPORTPERSON -> {
                                 val intent =
                                     Intent(this, DashboardTransportPersonActivity::class.java)
-                                startActivity(intent)
-                                finish()
+                                context.startActivity(intent)
+                                (context as Activity).finish()
                             }
 
                             UserType.AS_GATEKEEPER -> {
                                 val intent =
                                     Intent(this, DashboardGateKeeperActivity::class.java)
-                                startActivity(intent)
-                                finish()
+                                context.startActivity(intent)
+                                (context as Activity).finish()
                             }
 
                             UserType.AS_PRODUCTIONSUPERVISOR -> {
-                                val intent =
-                                    Intent(this, DashboardProductionSupervisorActivity::class.java)
-                                startActivity(intent)
-                                finish()
+                                val intent = Intent(this, DashboardProductionSupervisorActivity::class.java)
+                                context.startActivity(intent)
+                                (context as Activity).finish()
                             }
 
                         }

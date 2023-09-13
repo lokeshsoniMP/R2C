@@ -14,5 +14,8 @@ interface AuthDao {
     @Query("Select * from Users where id =:id")
     fun getUser(id: String): UserEntity
 
+    @Query("DELETE FROM Users ")
+    fun deleteUser()
+
 
 }

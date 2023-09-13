@@ -1,5 +1,7 @@
 package com.jsw.r2c.presentation.screens.dashboard.role.storeIncharge
 
+import android.app.Activity
+import android.content.Intent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -14,6 +16,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -22,12 +25,14 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.jsw.r2c.presentation.activities.MainActivity
 import com.jsw.r2c.presentation.customviews.TopAppBarR2C
 import com.jsw.r2c.presentation.screens.auth.LoginScreen
 import com.jsw.r2c.presentation.screens.dashboard.navigation.DashBoardNavigationRoute
@@ -46,6 +51,7 @@ fun StoreInChargeMainDashBoardScreen(authViewModel: AuthViewModel = hiltViewMode
     var selectedItemIndex by rememberSaveable {
         mutableIntStateOf(0)
     }
+    val context = LocalContext.current
 
     val systemUiController: SystemUiController = rememberSystemUiController()
     val scope = rememberCoroutineScope()
@@ -119,8 +125,13 @@ fun StoreInChargeMainDashBoardScreen(authViewModel: AuthViewModel = hiltViewMode
                         StoreInchargeDashBoardScreen(navController)
                     }
                     composable(DashBoardNavigationRoute.Logout.route) {
-                        authViewModel.removeUserAppLoginPref()
-                        LoginScreen()
+
+                        LaunchedEffect(key1 = Unit) {
+                            authViewModel.removeUserAppLoginPref()
+                            val intent = Intent(context, MainActivity::class.java)
+                            context.startActivity(intent)
+                            (context as Activity).finish()
+                        }
 
                     }
 

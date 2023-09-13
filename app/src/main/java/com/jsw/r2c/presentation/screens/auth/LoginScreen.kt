@@ -29,6 +29,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
@@ -226,58 +227,83 @@ fun LoginScreen(viewModel: AuthViewModel = hiltViewModel()) {
                     is ApiState.Success -> {
                         val response =
                             (viewModel.loginResponse.value as ApiState.Success<LoginResponse>).data
-                        viewModel.saveUser(response.token)
-                        val role = JWT(response.token).getClaim("role").asString()
-                        when (role) {
-                            UserType.PRODUCTION_HEAD -> {
-                                val intent =
-                                    Intent(context, DashboardProductionHeadActivity::class.java)
-                                context.startActivity(intent)
-                                (context as Activity).finish()
-                            }
 
-                            UserType.AS_MANAGER_HEAD -> {
-                                val intent =
-                                    Intent(context, DashboardManagerApprovalactivity::class.java)
-                                context.startActivity(intent)
-                                (context as Activity).finish()
-                            }
+                        LaunchedEffect(key1 = Unit) {
 
-                            UserType.AS_STOREINCHAREGE -> {
-                                val intent =
-                                    Intent(context, DashboardStoreInchargeActivity::class.java)
-                                context.startActivity(intent)
-                                (context as Activity).finish()
-                            }
+                            viewModel.saveUser(response.token).invokeOnCompletion {
 
-                            UserType.AS_PACKAGINGSUPERVISOR -> {
-                                val intent =
-                                    Intent(context, DashboardPackagingSupervisorActivity::class.java)
-                                context.startActivity(intent)
-                                (context as Activity).finish()
-                            }
+                                val role = JWT(response.token).getClaim("role").asString()
+                                when (role) {
+                                    UserType.PRODUCTION_HEAD -> {
+                                        val intent =
+                                            Intent(
+                                                context,
+                                                DashboardProductionHeadActivity::class.java
+                                            )
+                                        context.startActivity(intent)
+                                        (context as Activity).finish()
+                                    }
 
-                            UserType.AS_TRASPORTPERSON -> {
-                                val intent =
-                                    Intent(context, DashboardTransportPersonActivity::class.java)
-                                context.startActivity(intent)
-                                (context as Activity).finish()
-                            }
+                                    UserType.AS_MANAGER_HEAD -> {
+                                        val intent =
+                                            Intent(
+                                                context,
+                                                DashboardManagerApprovalactivity::class.java
+                                            )
+                                        context.startActivity(intent)
+                                        (context as Activity).finish()
+                                    }
 
-                            UserType.AS_GATEKEEPER -> {
-                                val intent =
-                                    Intent(context, DashboardGateKeeperActivity::class.java)
-                                context.startActivity(intent)
-                                (context as Activity).finish()
-                            }
+                                    UserType.AS_STOREINCHAREGE -> {
+                                        val intent =
+                                            Intent(
+                                                context,
+                                                DashboardStoreInchargeActivity::class.java
+                                            )
+                                        context.startActivity(intent)
+                                        (context as Activity).finish()
+                                    }
 
-                            UserType.AS_PRODUCTIONSUPERVISOR -> {
-                                val intent =
-                                    Intent(context, DashboardProductionSupervisorActivity::class.java)
-                                context.startActivity(intent)
-                                (context as Activity).finish()
-                            }
+                                    UserType.AS_PACKAGINGSUPERVISOR -> {
+                                        val intent =
+                                            Intent(
+                                                context,
+                                                DashboardPackagingSupervisorActivity::class.java
+                                            )
+                                        context.startActivity(intent)
+                                        (context as Activity).finish()
+                                    }
 
+                                    UserType.AS_TRASPORTPERSON -> {
+                                        val intent =
+                                            Intent(
+                                                context,
+                                                DashboardTransportPersonActivity::class.java
+                                            )
+                                        context.startActivity(intent)
+                                        (context as Activity).finish()
+                                    }
+
+                                    UserType.AS_GATEKEEPER -> {
+                                        val intent =
+                                            Intent(context, DashboardGateKeeperActivity::class.java)
+                                        context.startActivity(intent)
+                                        (context as Activity).finish()
+                                    }
+
+                                    UserType.AS_PRODUCTIONSUPERVISOR -> {
+                                        val intent =
+                                            Intent(
+                                                context,
+                                                DashboardProductionSupervisorActivity::class.java
+                                            )
+                                        context.startActivity(intent)
+                                        (context as Activity).finish()
+                                    }
+
+
+                                }
+                            }
 
                         }
 

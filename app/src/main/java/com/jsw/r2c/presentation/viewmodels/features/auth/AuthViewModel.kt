@@ -20,10 +20,13 @@ import com.jsw.r2c.room.dao.AuthDao
 import com.jsw.r2c.room.entity.UserEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
@@ -36,14 +39,14 @@ class AuthViewModel @Inject constructor(
     ViewModel() {
     val loginResponse: MutableState<ApiState<LoginResponse>> = mutableStateOf(ApiState.Empty)
     var authDataStore: AuthDataStoreManager
-   private lateinit var getUser: UserEntity
+    private lateinit var getUser: UserEntity
 
     init {
         authDataStore = AuthDataStoreManager(context)
 
 
-
     }
+
 
     fun getUser(): UserEntity {
 
@@ -83,12 +86,13 @@ class AuthViewModel @Inject constructor(
 
     fun removeUserAppLoginPref() = viewModelScope.launch {
         authDataStore.removeUser()
+        authDao.deleteUser()
         authDataStore.isLogin(false)
 
 
     }
 
-    fun saveUser(token: String) {
+    fun saveUser(token: String) = viewModelScope.launch {
         val jwt = JWT(token)
         val id = jwt.getClaim("Id").asString()
         val name = jwt.getClaim("name").asString()
@@ -113,6 +117,7 @@ class AuthViewModel @Inject constructor(
             aud = aud.toString()
         )
         authDao.insertUser(user = user)
+        Log.e("Goku", "insertUser User")
         saveUserAppLoginPref(id.toString())
 
     }
