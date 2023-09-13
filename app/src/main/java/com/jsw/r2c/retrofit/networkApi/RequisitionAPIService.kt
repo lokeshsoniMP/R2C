@@ -10,6 +10,7 @@ import com.jsw.r2c.retrofit.response.requisition.RequisitionListResponse
 import com.jsw.r2c.retrofit.response.requisition.RequisitionResponse
 import com.jsw.r2c.retrofit.response.requisition.requisitionApproveResponse.RequisitionApproveStatusResponse
 import com.jsw.r2c.retrofit.response.storage.StorageLocationResponse
+import com.jsw.r2c.retrofit.response.tracking.TrackingResponse
 import com.jsw.r2c.retrofit.response.unit.UnitTypeResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -61,5 +62,12 @@ interface RequisitionAPIService {
         @Query("requisitionStatus") requisitionStatus: Int?,
         @Query("approver") approver: String?
     ): RequisitionApproveStatusResponse
+
+    @POST("Requisition/{requistion_id}")
+    suspend fun GetRequisitionDetails(
+        @Path("requistion_id") requistion_id: Int?
+
+
+    ): TrackingResponse
 
 }

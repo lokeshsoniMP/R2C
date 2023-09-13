@@ -65,6 +65,7 @@ class DashboardTransportPersonActivity : ComponentActivity() {
         }
     }
     override fun onBackPressed() {
-        onBackPressedDispatcher.onBackPressed() // with this line
+        onBackPressedDispatcher.onBackPressed()
+        finish()
     }
 }

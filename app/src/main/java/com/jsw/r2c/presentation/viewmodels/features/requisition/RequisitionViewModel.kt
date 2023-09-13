@@ -16,6 +16,7 @@ import com.jsw.r2c.retrofit.response.requisition.RequisitionListResponse
 import com.jsw.r2c.retrofit.response.requisition.RequisitionResponse
 import com.jsw.r2c.retrofit.response.requisition.requisitionApproveResponse.RequisitionApproveStatusResponse
 import com.jsw.r2c.retrofit.response.storage.StorageLocationResponse
+import com.jsw.r2c.retrofit.response.tracking.TrackingResponse
 import com.jsw.r2c.retrofit.response.unit.UnitTypeResponse
 import com.jsw.r2c.retrofit.utlis.ApiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,6 +30,8 @@ import javax.inject.Inject
 class RequisitionViewModel @Inject constructor(private val requisitionRepository: RequisitionRepository) :
     ViewModel() {
     val materialIdResponse: MutableState<ApiState<MaterialResponse>> =
+        mutableStateOf(ApiState.Empty)
+    val trackingResponse: MutableState<ApiState<TrackingResponse>> =
         mutableStateOf(ApiState.Empty)
     val materialGroupResponse: MutableState<ApiState<MaterialDetailResponse>> =
         mutableStateOf(ApiState.Empty)
@@ -150,6 +153,22 @@ class RequisitionViewModel @Inject constructor(private val requisitionRepository
 
         }.collect {
             approveStatusResponse.value = ApiState.Success(it)
+        }
+    }
+
+
+
+    fun getTrackingDetails(
+        requisitionId: Int
+    ) = viewModelScope.launch {
+        requisitionRepository.getTrackingDetails(requisitionId).onStart {
+            trackingResponse.value = ApiState.Loading
+        }.catch {
+
+            trackingResponse.value = ApiState.Failure(API_ERROR_MSG)
+
+        }.collect {
+            trackingResponse.value = ApiState.Success(it)
         }
     }
 

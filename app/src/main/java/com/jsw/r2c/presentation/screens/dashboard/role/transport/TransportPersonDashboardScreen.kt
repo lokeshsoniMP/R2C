@@ -10,7 +10,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -28,6 +30,7 @@ import androidx.navigation.NavController
 import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import com.jsw.r2c.presentation.screens.dashboard.role.RequisitionRequest
+import com.jsw.r2c.presentation.screens.dashboard.role.RequisitionText
 import com.jsw.r2c.presentation.theme.BlueDark
 import com.jsw.r2c.presentation.theme.Kefa
 
@@ -42,6 +45,7 @@ fun TransportPersonDashboardScreen(navController: NavController) {
             modifier = Modifier.padding(
                 16.dp
             )
+                .verticalScroll(rememberScrollState()),
         ) {
             Text(
                 text = "Welcome\n Driver  Name",
@@ -81,6 +85,34 @@ fun TransportPersonDashboardScreen(navController: NavController) {
 
                 Text(text = "Gate Pass", fontSize = 24.sp)
             }
+            Spacer(modifier = Modifier.padding(8.dp))
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .border(2.dp, BlueDark, RoundedCornerShape(8))
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ){
+                RequisitionText(
+                    title = "Material Id :",
+                    value = "sdfsdfsfs"
+                )
+
+                RequisitionText(
+                    title = "Material Id :",
+                    value = "sdfsdfsfs"
+                )
+                RequisitionText(
+                    title = "Material Id :",
+                    value = "sdfsdfsfs"
+                )
+            }
+
+
+
+
         }
 
 

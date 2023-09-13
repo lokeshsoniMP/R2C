@@ -7,6 +7,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,9 +26,11 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,16 +41,93 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.jsw.r2c.presentation.screens.dashboard.role.RequisitionRequest
 import com.jsw.r2c.presentation.screens.dashboard.role.RequisitionText
 import com.jsw.r2c.presentation.theme.BlueDark
 import com.jsw.r2c.presentation.theme.Kefa
 import com.jsw.r2c.R
+import com.jsw.r2c.presentation.viewmodels.features.auth.AuthViewModel
+import com.jsw.r2c.presentation.viewmodels.features.requisition.RequisitionViewModel
+import com.jsw.r2c.retrofit.response.requisition.RequisitionListResponse
+import com.jsw.r2c.retrofit.response.requisition.RequisitionListResponseItem
+import com.jsw.r2c.retrofit.response.tracking.TrackingResponse
+import com.jsw.r2c.retrofit.utlis.ApiState
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun TrackingRequisitionScreen(navController: NavController) {
+fun TrackingRequisitionScreen(navController: NavController,
+                              requisitionViewModel: RequisitionViewModel = hiltViewModel(),
+                              authViewModel: AuthViewModel = hiltViewModel()
+) {
+    var requisitionList = rememberSaveable {
+        mutableListOf<RequisitionListResponseItem>()
+    }
+
+    var trackingList = rememberSaveable {
+        mutableListOf<TrackingResponse>()
+    }
+
+    LaunchedEffect(key1 = Unit) {
+        requisitionViewModel.getRequisitionList()
+
+
+    }
+    when (requisitionViewModel.getRequisitionListResponse.value) {
+        ApiState.Loading -> {
+        }
+
+        is ApiState.Success -> {
+            val response =
+                (requisitionViewModel.getRequisitionListResponse.value as ApiState.Success<RequisitionListResponse>).data
+            requisitionList.clear()
+            requisitionList = response.toMutableList()
+
+        }
+
+        is ApiState.Failure -> {
+            val response =
+                (requisitionViewModel.getRequisitionListResponse.value as ApiState.Failure).msg
+
+
+        }
+
+        else -> {
+
+        }
+
+    }
+    when (requisitionViewModel.trackingResponse.value) {
+        ApiState.Loading -> {
+        }
+
+        is ApiState.Success -> {
+            val response =
+                (requisitionViewModel.trackingResponse.value as ApiState.Success<TrackingResponse>).data
+            trackingList.clear()
+            trackingList.add(response)
+
+
+        }
+
+        is ApiState.Failure -> {
+            val response =
+                (requisitionViewModel.trackingResponse.value as ApiState.Failure).msg
+
+
+        }
+
+        else -> {
+
+        }
+
+    }
+
+
+
+
+
 
     Box(modifier = Modifier.fillMaxSize()) {
         val requisitionRequest = remember {
@@ -56,33 +137,8 @@ fun TrackingRequisitionScreen(navController: NavController) {
             mutableStateOf(0)
         }
 
-        requisitionRequest.add(
-            RequisitionRequest(
-                "10000",
-                "Provide me this",
-                "Hon",
-                "1000 kg",
-                "Kg",
-                "11-jan 2023",
-                "Banglore",
-                "Banglore",
-                1
-            )
-        )
 
-        requisitionRequest.add(
-            RequisitionRequest(
-                "10000",
-                "Provide me this",
-                "Hon",
-                "1000 kg",
-                "Kg",
-                "11-jan 2023",
-                "Banglore",
-                "Banglore",
-                0
-            )
-        )
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -131,6 +187,7 @@ fun TrackingRequisitionScreen(navController: NavController) {
                         Button(
                             shape = RoundedCornerShape(0),
                             onClick = {
+                                requisitionViewModel.getTrackingDetails(requisitionList.get(selectedRequisitionIndex).id)
                                 --selectedRequisitionIndex
                             }, colors = ButtonDefaults.buttonColors(
                                 disabledContainerColor = Color.Green,
@@ -143,7 +200,9 @@ fun TrackingRequisitionScreen(navController: NavController) {
                         Spacer(modifier = Modifier.padding(horizontal = 4.dp))
                         Button(
                             shape = RoundedCornerShape(0),
-                            onClick = { ++selectedRequisitionIndex },
+                            onClick = {
+                                requisitionViewModel.getTrackingDetails(requisitionList.get(selectedRequisitionIndex).id)
+                                ++selectedRequisitionIndex },
                             colors = ButtonDefaults.buttonColors(
                                 disabledContainerColor = Color.Green,
                                 containerColor = Color(0xFFD2D2D2)
@@ -157,7 +216,67 @@ fun TrackingRequisitionScreen(navController: NavController) {
                     }
                 }
 
+
+
                 Spacer(modifier = Modifier.padding(16.dp))
+                LazyColumn(
+                    contentPadding = PaddingValues(8.dp)
+                ) {
+                    items(trackingList.get(0).tracking.size) { index ->
+                        Row(modifier = Modifier
+                            .fillMaxWidth()) {
+                            Column {
+                                Image(
+                                    painter = painterResource(id = R.drawable.requestion_1),
+                                    contentDescription = "Requisition",
+                                    modifier = Modifier
+
+                                        .size(46.dp)
+
+                                        .background(
+                                            Color(
+                                                0xFF6C91FF
+                                            ), shape = CircleShape
+                                        )
+                                        .padding(12.dp)
+                                )
+                                Divider(
+                                    modifier = Modifier
+                                        .height(24.dp)
+                                        .padding(start = 21.dp)
+                                        .width(width = 4.dp),
+                                    color =  Color(
+                                        0xFFE1E1E1
+                                    )
+                                )
+                            }
+                            Spacer(modifier = Modifier.padding(16.dp))
+                            Column() {
+                                Text(
+                                    text = "${trackingList.get(0).tracking.get(index).actionBy}",
+                                    fontSize = 18.sp,
+                                    color = Color.DarkGray, fontWeight = FontWeight.Bold
+                                )
+                                Row {
+                                    Text(
+                                        text = "${trackingList.get(0).tracking.get(index).actionDate}",
+                                        fontSize = 16.sp,
+                                        color = Color.DarkGray
+                                    )
+                                    Spacer(modifier = Modifier.padding(16.dp))
+                                    Text(
+                                        text = "${trackingList.get(0).tracking.get(index).actionDate}",
+                                        fontSize = 16.sp,
+                                        color = Color.DarkGray,
+                                    )
+                                }
+                            }
+                        }
+
+                    }
+
+                }
+
                 Row(modifier = Modifier
                     .fillMaxWidth()) {
                     Column {

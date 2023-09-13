@@ -138,8 +138,8 @@ fun TransPortMainDashBoardScreen(authViewModel: AuthViewModel = hiltViewModel())
                     composable(DashBoardNavigationRoute.Home.route) {
                         TransportPersonDashboardScreen(navController)
                     }
-                    composable(DashBoardNavigationRoute.NotificationScreen.route) {
-                        NotificationScreen(navController)
+                    composable(DashBoardNavigationRoute.TransportNotificationScreen.route) {
+                        TransportNotificationScreen(navController)
                     }
                     composable(DashBoardNavigationRoute.Logout.route) {
 

@@ -10,6 +10,7 @@ import com.jsw.r2c.retrofit.response.requisition.RequisitionListResponse
 import com.jsw.r2c.retrofit.response.requisition.RequisitionResponse
 import com.jsw.r2c.retrofit.response.requisition.requisitionApproveResponse.RequisitionApproveStatusResponse
 import com.jsw.r2c.retrofit.response.storage.StorageLocationResponse
+import com.jsw.r2c.retrofit.response.tracking.TrackingResponse
 import com.jsw.r2c.retrofit.response.unit.UnitTypeResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -67,6 +68,18 @@ class RequisitionRepository @Inject constructor(
                     requistion_id = requsitionId,
                     approver = approver,
                     requisitionStatus = status
+                )
+            )
+        }
+
+    fun getTrackingDetails(
+        requsitionId: Int
+    ): Flow<TrackingResponse> =
+        flow {
+            emit(
+                requisitionApiService.GetRequisitionDetails(
+                    requistion_id = requsitionId
+
                 )
             )
         }
