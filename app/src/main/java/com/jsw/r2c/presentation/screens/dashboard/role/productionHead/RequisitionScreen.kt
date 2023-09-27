@@ -2,7 +2,6 @@ package com.jsw.r2c.presentation.screens.dashboard.role.productionHead
 
 import android.annotation.SuppressLint
 import android.util.Log
-import android.widget.DatePicker
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -211,13 +210,13 @@ fun RequisitionScreen(viewModel: RequisitionViewModel = hiltViewModel(),authView
                     )
 
                     RequisitionQuantityAndUnitTypeInputField(onSelectedQuantity = {
-                        quantity.value = it.toInt()
+                        quantity.value = if(it.isNotEmpty()) it.toInt() else return@RequisitionQuantityAndUnitTypeInputField
                     }, onUnitTypeSelected = {
                         unityType.value = it.id
                     })
 
                     DeliveryDate(onDateSelected = {
-                       deliveryDate.value=it
+                       deliveryDate.value= it
                     })
 
 
@@ -280,9 +279,9 @@ fun RequisitionScreen(viewModel: RequisitionViewModel = hiltViewModel(),authView
                                         userId = authViewModel.getUser().name,
                                         materialId = materialId.value.toInt(),
                                         quantity = quantity.value,
-                                        unitsId = unityType.value.toInt(),
-                                        deliveryDate = deliveryDate.toString(),
-                                        plantId = plantLocationId.value.toInt(),
+                                        unitsId = unityType.value,
+                                        deliveryDate = deliveryDate.value,
+                                        plantId = plantLocationId.value,
                                         storageLocationId = storageLocationId.value
                                     )
 
@@ -370,7 +369,7 @@ fun RequisitionScreen(viewModel: RequisitionViewModel = hiltViewModel(),authView
                     Text(
                         text = "Requisition Generated\n" +
                                 "Successfully",
-                        fontSize = 24.sp,
+                        fontSize = 20.sp,
                         color = Color.Black,
                         fontFamily = Kefa,
                         textAlign = TextAlign.Center,
@@ -459,14 +458,15 @@ fun DeliveryDate(
                             Date(
                                 it
                             )
-                        })
+                        }!!)
 
-                        val formatter2 = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sssZ", Locale.ROOT)
+                        val formatter2 = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss'Z'", Locale.ROOT)
+//                        val formatter2 = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.sssZ", Locale.ROOT)
                         onDateSelected(formatter2.format(datePickerState.selectedDateMillis?.let {
                             Date(
                                 it
                             )
-                        }))
+                        }!!))
                     }) {
                         Text("Ok")
                     }

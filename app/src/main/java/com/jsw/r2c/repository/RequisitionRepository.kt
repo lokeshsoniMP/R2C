@@ -1,11 +1,15 @@
 package com.jsw.r2c.repository
 
 import com.jsw.r2c.retrofit.networkApi.RequisitionAPIService
+import com.jsw.r2c.retrofit.request.requisition.AssignPackagingSupervisorRequest
+import com.jsw.r2c.retrofit.request.requisition.CreateGINRequest
 import com.jsw.r2c.retrofit.request.requisition.CreateRequisitionRequest
 import com.jsw.r2c.retrofit.response.material.MaterialResponse
 import com.jsw.r2c.retrofit.response.material.materialDetail.MaterialDetailResponse
 import com.jsw.r2c.retrofit.response.notification.NotificationResponse
 import com.jsw.r2c.retrofit.response.plant.PlantResponse
+import com.jsw.r2c.retrofit.response.requisition.AssignPackagingSupervisorResponse
+import com.jsw.r2c.retrofit.response.requisition.RequisitionGINResponse
 import com.jsw.r2c.retrofit.response.requisition.RequisitionListResponse
 import com.jsw.r2c.retrofit.response.requisition.RequisitionResponse
 import com.jsw.r2c.retrofit.response.requisition.requisitionApproveResponse.RequisitionApproveStatusResponse
@@ -79,6 +83,33 @@ class RequisitionRepository @Inject constructor(
             emit(
                 requisitionApiService.GetRequisitionDetails(
                     requistion_id = requsitionId
+
+                )
+            )
+        }
+    fun assignPackageSuperVisorRequisition(
+        requsitionId: Int,
+        assignPackagingSupervisorRequest: AssignPackagingSupervisorRequest
+    ): Flow<AssignPackagingSupervisorResponse> =
+        flow {
+            emit(
+                requisitionApiService.AssignPackagingSupervisor(
+                    requistion_id = requsitionId,
+                    assignPackagingSupervisorRequest
+
+                )
+            )
+        }
+
+    fun createGINRequisitionRepository(
+        requsitionId: Int,
+        createGINRequest: CreateGINRequest
+    ): Flow<RequisitionGINResponse> =
+        flow {
+            emit(
+                requisitionApiService.createGINRequisition(
+                    requistion_id = requsitionId,
+                    createGINRequest
 
                 )
             )

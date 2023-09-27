@@ -135,6 +135,9 @@ fun ManagerMainDashBoardScreen(authViewModel: AuthViewModel = hiltViewModel()) {
                     startDestination = DashBoardNavigationRoute.Home.route
                 ) {
                     composable(DashBoardNavigationRoute.Home.route) {
+                        ManagerNotificationScreen(navController)
+                    }
+                    composable(DashBoardNavigationRoute.ManagerDashaBoardScreen.route) {
                         ManagerDashBoardApprovalScreen(navController)
                     }
 
@@ -149,6 +152,7 @@ fun ManagerMainDashBoardScreen(authViewModel: AuthViewModel = hiltViewModel()) {
                         LaunchedEffect(key1 = Unit) {
                             authViewModel.removeUserAppLoginPref()
                             val intent = Intent(context, MainActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK and Intent.FLAG_ACTIVITY_NEW_TASK
                             context.startActivity(intent)
                             (context as Activity).finish()
                         }

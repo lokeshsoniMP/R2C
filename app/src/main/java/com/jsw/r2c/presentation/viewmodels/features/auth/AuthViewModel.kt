@@ -39,12 +39,11 @@ class AuthViewModel @Inject constructor(
     ViewModel() {
     val loginResponse: MutableState<ApiState<LoginResponse>> = mutableStateOf(ApiState.Empty)
     var authDataStore: AuthDataStoreManager
-    private lateinit var getUser: UserEntity
+    var getUser: UserEntity
 
     init {
         authDataStore = AuthDataStoreManager(context)
-
-
+        getUser = UserEntity("","",0,0,"","","",0,"")
     }
 
 

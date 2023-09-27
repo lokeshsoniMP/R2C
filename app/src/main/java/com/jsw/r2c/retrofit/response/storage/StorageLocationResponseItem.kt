@@ -4,5 +4,5 @@ data class StorageLocationResponseItem(
     val id: Int,
     val name: String,
     val plant: String?,
-    val plantId: Int
+    val plantId: Int?
 )

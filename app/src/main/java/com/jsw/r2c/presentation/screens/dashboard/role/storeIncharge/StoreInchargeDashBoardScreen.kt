@@ -2,7 +2,6 @@ package com.jsw.r2c.presentation.screens.dashboard.role.storeIncharge
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Intent
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -198,8 +197,8 @@ fun StoreInchargeDashBoardScreen(
             )
         ) {
             Text(
-                text = "Welcome\n ${authViewModel.getUser().name?:""}",
-                fontSize = 24.sp,
+                text = "Welcome,\n${authViewModel.getUser().name?:""}",
+                fontSize = 18.sp,
                 color = Color.Black,
                 fontFamily = Kefa,
                 fontWeight = FontWeight.Bold
@@ -307,7 +306,38 @@ fun StoreInchargeDashBoardScreen(
                             requisitionList.get(requisitionRequestIndex).plantId == it.id
                         }?.plantName ?: ""
                     )
+                    when (requisitionViewModel.getStorageLocationResponse.value) {
+                        ApiState.Loading -> {
+                        }
 
+                        is ApiState.Success -> {
+
+                            val response =
+                                (requisitionViewModel.getStorageLocationResponse.value as ApiState.Success<StorageLocationResponse>).data
+
+                            RequisitionText(
+                                title = "Storage Location :", value = response.find {
+                                    requisitionList[requisitionRequestIndex].storageLocationId == it.id
+                                }?.name ?: ""
+                            )
+
+
+                        }
+
+                        is ApiState.Failure -> {
+
+                        }
+
+                        else -> {
+
+                        }
+
+                    }
+                    RequisitionText(
+                        title = "Status : ",
+                        value = requisitionList[requisitionRequestIndex].status,
+                        valueColor = Color(0xFF851D1D)
+                    )
                     Button(
                         modifier = Modifier.fillMaxWidth(),
                         onClick = {
@@ -333,82 +363,48 @@ fun StoreInchargeDashBoardScreen(
                     }
 
 
-                    when (requisitionViewModel.getStorageLocationResponse.value) {
-                        ApiState.Loading -> {
-                        }
-
-                        is ApiState.Success -> {
-
-                            val response =
-                                (requisitionViewModel.getStorageLocationResponse.value as ApiState.Success<StorageLocationResponse>).data
-
-                            RequisitionText(
-                                title = "Storage Location :", value = response.find {
-                                    requisitionList.get(requisitionRequestIndex).storageLocationId == it.id
-                                }?.name ?: ""
-                            )
-
-
-                        }
-
-                        is ApiState.Failure -> {
-
-                        }
-
-                        else -> {
-
-                        }
-
-                    }
-
-                    RequisitionText(
-                        title = "Status : ",
-                        value = "Approval Pending",
-                        valueColor = Color(0xFF851D1D)
-                    )
-
-                    Row(modifier = Modifier.fillMaxWidth()) {
-                        Button(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .weight(0.5f)
-                                .padding(horizontal = 10.dp), onClick = {
-                                requisitionViewModel.changeRequisitionRequestStatus(
-                                    requisitionId = requisitionList.get(
-                                        requisitionRequestIndex
-                                    ).id, approver = authViewModel.getUser().name, status = 0
-                                )
-
-                                requisitionViewModel.getRequisitionList()
-                            }, colors = ButtonDefaults.buttonColors(
-                                disabledContainerColor = Color.Red,
-                                containerColor = Color(0xFF851D1D)
-                            ), shape = RoundedCornerShape(12)
-
-                        ) {
-                            Text(text = "Cancel", color = Color.White)
-                        }
-                        Button(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .weight(0.5f)
-                                .padding(horizontal = 10.dp), onClick = {
-
-                                requisitionViewModel.changeRequisitionRequestStatus(
-                                    requisitionId = requisitionList.get(
-                                        requisitionRequestIndex
-                                    ).id, approver = authViewModel.getUser().name, status = 1
-                                )
-                                requisitionViewModel.getRequisitionList()
-                            }, colors = ButtonDefaults.buttonColors(
-                                disabledContainerColor = Color.Green,
-                                containerColor = Color(0xFF38851D)
-                            ), shape = RoundedCornerShape(12)
-
-                        ) {
-                            Text(text = "Approve", color = Color.White)
-                        }
-                    }
+//                    Row(modifier = Modifier.fillMaxWidth()) {
+//                        Button(
+//                            modifier = Modifier
+//                                .fillMaxWidth()
+//                                .weight(0.5f)
+//                                .padding(horizontal = 10.dp), onClick = {
+//                                requisitionViewModel.changeRequisitionRequestStatus(
+//                                    requisitionId = requisitionList.get(
+//                                        requisitionRequestIndex
+//                                    ).id, approver = authViewModel.getUser().name, status = 0
+//                                )
+//
+//                                requisitionViewModel.getRequisitionList()
+//                            }, colors = ButtonDefaults.buttonColors(
+//                                disabledContainerColor = Color.Red,
+//                                containerColor = Color(0xFF851D1D)
+//                            ), shape = RoundedCornerShape(12)
+//
+//                        ) {
+//                            Text(text = "Cancel", color = Color.White)
+//                        }
+//                        Button(
+//                            modifier = Modifier
+//                                .fillMaxWidth()
+//                                .weight(0.5f)
+//                                .padding(horizontal = 10.dp), onClick = {
+//
+//                                requisitionViewModel.changeRequisitionRequestStatus(
+//                                    requisitionId = requisitionList.get(
+//                                        requisitionRequestIndex
+//                                    ).id, approver = authViewModel.getUser().name, status = 1
+//                                )
+//                                requisitionViewModel.getRequisitionList()
+//                            }, colors = ButtonDefaults.buttonColors(
+//                                disabledContainerColor = Color.Green,
+//                                containerColor = Color(0xFF38851D)
+//                            ), shape = RoundedCornerShape(12)
+//
+//                        ) {
+//                            Text(text = "Approve", color = Color.White)
+//                        }
+//                    }
 
                 }
             }

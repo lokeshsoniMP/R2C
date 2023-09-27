@@ -70,7 +70,7 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.7.1")
     // Material Icon
     implementation("androidx.compose.material:material-icons-extended:1.5.1")
-    implementation(platform("androidx.compose:compose-bom:2023.03.00"))
+    implementation(platform("androidx.compose:compose-bom:2023.08.00"))
 
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")

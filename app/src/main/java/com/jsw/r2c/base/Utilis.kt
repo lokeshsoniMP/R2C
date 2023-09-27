@@ -10,4 +10,10 @@ object Utilis {
         val formattedDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
         return formattedDate.format(date)
     }
+    fun convertDateTimeToZString(datetime: String): String {
+        val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss", Locale.getDefault())
+        val date = formatter.parse(datetime)
+        val formattedDate = SimpleDateFormat("dd-MMM-yy HH:mm", Locale.getDefault())
+        return formattedDate.format(date)
+    }
 }

@@ -61,7 +61,7 @@ import javax.inject.Inject
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun DashBoardScreen(navController: NavController, viewModel: AuthViewModel = hiltViewModel()) {
+fun DashBoardScreen(navController: NavController, authViewModel: AuthViewModel = hiltViewModel()) {
 
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -72,8 +72,8 @@ fun DashBoardScreen(navController: NavController, viewModel: AuthViewModel = hil
             )
         ) {
             Text(
-                text = "Welcome",
-                fontSize = 24.sp,
+                text = "Welcome,\n${authViewModel.getUser().name?:""}",
+                fontSize = 18.sp,
                 color = Color.Black,
                 fontFamily = Kefa,
                 fontWeight = FontWeight.Bold
@@ -83,7 +83,6 @@ fun DashBoardScreen(navController: NavController, viewModel: AuthViewModel = hil
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-
                     .border(2.dp, BlueDark, RoundedCornerShape(8))
                     .padding(16.dp)
                     .clickable {

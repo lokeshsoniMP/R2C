@@ -2,7 +2,6 @@ package com.jsw.r2c.presentation.screens.dashboard.role.storeIncharge
 
 import android.annotation.SuppressLint
 import android.util.Log
-import android.widget.DatePicker
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -22,24 +21,18 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.DatePicker
-import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -56,7 +49,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -65,29 +57,23 @@ import androidx.compose.ui.window.PopupProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.jsw.r2c.R
-import com.jsw.r2c.presentation.screens.dashboard.role.RequisitionText
 import com.jsw.r2c.presentation.theme.BlueDark
 import com.jsw.r2c.presentation.theme.Kefa
 import com.jsw.r2c.presentation.viewmodels.features.auth.AuthViewModel
 import com.jsw.r2c.presentation.viewmodels.features.requisition.RequisitionViewModel
-import com.jsw.r2c.retrofit.request.requisition.CreateRequisitionRequest
+import com.jsw.r2c.retrofit.request.requisition.AssignPackagingSupervisorRequest
 import com.jsw.r2c.retrofit.response.material.MaterialResponse
 import com.jsw.r2c.retrofit.response.material.MaterialResponseItem
 import com.jsw.r2c.retrofit.response.plant.PlantResponse
 import com.jsw.r2c.retrofit.response.plant.PlantResponseItem
+import com.jsw.r2c.retrofit.response.requisition.AssignPackagingSupervisorResponse
 import com.jsw.r2c.retrofit.response.requisition.RequisitionResponse
 import com.jsw.r2c.retrofit.response.storage.StorageLocationResponse
 import com.jsw.r2c.retrofit.response.storage.StorageLocationResponseItem
-import com.jsw.r2c.retrofit.response.unit.UnitTypeResponse
-import com.jsw.r2c.retrofit.response.unit.UnitTypeResponseItem
 import com.jsw.r2c.retrofit.utlis.ApiState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
 import java.time.LocalDate
-import java.util.Calendar
-import java.util.Date
-import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -134,7 +120,28 @@ fun AssignSuperviser(navController: NavController, viewModel: RequisitionViewMod
     // Declaring integer values
     // for year, month and day
 
+    when (viewModel.assignPackagingSupervisorResponse.value) {
+        ApiState.Loading -> {
+        }
 
+        is ApiState.Success -> {
+
+            val response =
+                (viewModel.assignPackagingSupervisorResponse.value as ApiState.Success<AssignPackagingSupervisorResponse>).data
+
+            isRequisitionFormSubmitted = true
+        }
+
+        is ApiState.Failure -> {
+            val response = (viewModel.assignPackagingSupervisorResponse.value as ApiState.Failure).msg
+
+        }
+
+        else -> {
+
+        }
+
+    }
     // Create a date picker dialog
 
     if (!isRequisitionFormSubmitted) {
@@ -215,13 +222,21 @@ fun AssignSuperviser(navController: NavController, viewModel: RequisitionViewMod
                     )
 
                     // short text
-                    Text(
-                        text = "Short Text",
-                        fontSize = 16.sp,
-                        fontFamily = FontFamily.SansSerif,
-                        fontWeight = FontWeight.SemiBold
+                    TextField(
+                        value = shortTextID.value,
+                        onValueChange = {
+                            shortTextID.value = it
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        label = {
+                            Text(text = "Enter Short Text")
+                        },
+                        colors = TextFieldDefaults.outlinedTextFieldColors(
+                            focusedBorderColor = Color.Transparent,
+                            unfocusedBorderColor = Color.Transparent,
+                        )
                     )
-
 
 
 
@@ -229,17 +244,15 @@ fun AssignSuperviser(navController: NavController, viewModel: RequisitionViewMod
                         modifier = Modifier.fillMaxWidth(),
                         onClick = {
                             coroutine.launch {
-                               /* viewModel.createRequisition(
-                                    CreateRequisitionRequest(
-                                        userId = authViewModel.getUser().name,
-                                        materialId = materialId.value.toInt(),
-                                        quantity = quantity.value,
-                                        unitsId = unityType.value.toInt(),
-                                        deliveryDate = deliveryDate.toString(),
-                                        plantId = plantLocationId.value.toInt(),
-                                        storageLocationId = storageLocationId.value
-                                    )*/
-
+                                viewModel.assignPackageSupervisor(requisitionId = storageLocationId.value,
+                                    AssignPackagingSupervisorRequest(
+                                        plantId = plantLocationId.value,
+                                        storageId = storageLocationId.value,
+                                        packagingSupervisor = materialId.value,
+                                        shortText =shortTextID.value
+                                    )
+                                )
+                                isRequisitionFormSubmitted = true
 
                             }
                         },
@@ -249,7 +262,7 @@ fun AssignSuperviser(navController: NavController, viewModel: RequisitionViewMod
                         ), shape = RoundedCornerShape(12)
 
                     ) {
-                        Text(text = stringResource(R.string.Conform_supervise), color = Color.White)
+                        Text(text = stringResource(R.string.Confirm_supervise), color = Color.White)
                     }
 
                 }
@@ -322,9 +335,9 @@ fun AssignSuperviser(navController: NavController, viewModel: RequisitionViewMod
 
                     Spacer(modifier = Modifier.padding(16.dp))
                     Text(
-                        text = "Requisition Generated\n" +
+                        text = "Supervisor Assigned\n" +
                                 "Successfully",
-                        fontSize = 24.sp,
+                        fontSize = 20.sp,
                         color = Color.Black,
                         fontFamily = Kefa,
                         textAlign = TextAlign.Center,
@@ -337,7 +350,6 @@ fun AssignSuperviser(navController: NavController, viewModel: RequisitionViewMod
             LaunchedEffect(key1 = Unit) {
                 delay(2000)
                 isRequisitionFormSubmitted = false
-                viewModel.createRequisitionResponse.value = ApiState.Empty
             }
 
         }

@@ -7,11 +7,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jsw.r2c.base.ResponseConst.API_ERROR_MSG
 import com.jsw.r2c.repository.RequisitionRepository
+import com.jsw.r2c.retrofit.request.requisition.AssignPackagingSupervisorRequest
+import com.jsw.r2c.retrofit.request.requisition.CreateGINRequest
 import com.jsw.r2c.retrofit.request.requisition.CreateRequisitionRequest
 import com.jsw.r2c.retrofit.response.material.MaterialResponse
 import com.jsw.r2c.retrofit.response.material.materialDetail.MaterialDetailResponse
 import com.jsw.r2c.retrofit.response.notification.NotificationResponse
 import com.jsw.r2c.retrofit.response.plant.PlantResponse
+import com.jsw.r2c.retrofit.response.requisition.AssignPackagingSupervisorResponse
+import com.jsw.r2c.retrofit.response.requisition.RequisitionGINResponse
 import com.jsw.r2c.retrofit.response.requisition.RequisitionListResponse
 import com.jsw.r2c.retrofit.response.requisition.RequisitionResponse
 import com.jsw.r2c.retrofit.response.requisition.requisitionApproveResponse.RequisitionApproveStatusResponse
@@ -50,6 +54,12 @@ class RequisitionViewModel @Inject constructor(private val requisitionRepository
         mutableStateOf(ApiState.Empty)
 
     val getNotification: MutableState<ApiState<NotificationResponse>> =
+        mutableStateOf(ApiState.Empty)
+
+    val assignPackagingSupervisorResponse: MutableState<ApiState<AssignPackagingSupervisorResponse>> =
+        mutableStateOf(ApiState.Empty)
+
+    val createGINRequisitionResponse: MutableState<ApiState<RequisitionGINResponse>> =
         mutableStateOf(ApiState.Empty)
 
     fun getMaterial() = viewModelScope.launch {
@@ -183,6 +193,31 @@ class RequisitionViewModel @Inject constructor(private val requisitionRepository
 
             }.collect {
                 createRequisitionResponse.value = ApiState.Success(it)
+            }
+        }
+    fun assignPackageSupervisor(requisitionId: Int, assignPackagingSupervisorRequest: AssignPackagingSupervisorRequest) =
+        viewModelScope.launch {
+            requisitionRepository.assignPackageSuperVisorRequisition(requisitionId, assignPackagingSupervisorRequest).onStart {
+                assignPackagingSupervisorResponse.value = ApiState.Loading
+            }.catch {
+
+                assignPackagingSupervisorResponse.value = ApiState.Failure(API_ERROR_MSG)
+
+            }.collect {
+                assignPackagingSupervisorResponse.value = ApiState.Success(it)
+            }
+        }
+
+    fun createGINRequisitionViewModel(requisitionId: Int, createGINRequest: CreateGINRequest) =
+        viewModelScope.launch {
+            requisitionRepository.createGINRequisitionRepository(requisitionId, createGINRequest).onStart {
+                createGINRequisitionResponse.value = ApiState.Loading
+            }.catch {
+
+                createGINRequisitionResponse.value = ApiState.Failure(API_ERROR_MSG)
+
+            }.collect {
+                createGINRequisitionResponse.value = ApiState.Success(it)
             }
         }
 }

@@ -10,6 +10,10 @@
     <string name="title_activity_dashboard">DashboardActivity</string>
     <string name="submit">Submit</string>
     <string name="assign_supervise">Assign Supervisor</string>
-    <string name="Conform_supervise">Conform Supervisor</string>
+    <string name="Confirm_supervise">Confirm Supervisor</string>
     <string name="assign_gni">Create GIN</string>
+    <string name="goods_issue_note">Goods Issue Note</string>
+    <string name="goods_receipt_note">Goods Receipt Note</string>
+    <string name="confirm_gin">Confirm GIN</string>
+    <string name="confirm_entry">Confirm Entry</string>
 </resources>

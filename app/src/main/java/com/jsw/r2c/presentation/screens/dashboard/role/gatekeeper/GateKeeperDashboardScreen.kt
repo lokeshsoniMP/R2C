@@ -37,6 +37,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeEncoder
@@ -46,12 +47,13 @@ import com.jsw.r2c.R
 import com.jsw.r2c.presentation.screens.dashboard.role.RequisitionRequest
 import com.jsw.r2c.presentation.theme.BlueDark
 import com.jsw.r2c.presentation.theme.Kefa
+import com.jsw.r2c.presentation.viewmodels.features.auth.AuthViewModel
 import kotlinx.coroutines.delay
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun GateKeeperDashboardScreen(navController: NavController) {
+fun GateKeeperDashboardScreen(navController: NavController, authViewModel: AuthViewModel = hiltViewModel()) {
 // Register the launcher and result handler
     // Register the launcher and result handler
 
@@ -66,7 +68,7 @@ fun GateKeeperDashboardScreen(navController: NavController) {
 
     val barcodeLauncher = rememberLauncherForActivityResult(ScanContract()) { result ->
         if (result.contents == null) {
-            isGatePassApproved.value = true
+            isGatePassApproved.value = false
             isGatePassCancelled.value = true
         } else {
             isGatePassApproved.value = true
@@ -90,8 +92,8 @@ fun GateKeeperDashboardScreen(navController: NavController) {
                 )
             ) {
                 Text(
-                    text = "Welcome\n GateKeeper  Name",
-                    fontSize = 24.sp,
+                    text = "Welcome,\n${authViewModel.getUser().name}",
+                    fontSize = 18.sp,
                     color = Color.Black,
                     fontFamily = Kefa,
                     fontWeight = FontWeight.Bold
@@ -136,7 +138,7 @@ fun GateKeeperDashboardScreen(navController: NavController) {
                             }
                     )
 
-                    Text(text = "Gate Pass", fontSize = 24.sp)
+                    Text(text = "Gate Pass", fontSize = 20.sp)
                 }
             }
 
@@ -152,7 +154,7 @@ fun GateKeeperDashboardScreen(navController: NavController) {
             ) {
                 Text(
                     text = "Scan to GO",
-                    fontSize = 24.sp,
+                    fontSize = 20.sp,
                     color = Color.Black,
                     fontFamily = Kefa,
                     textAlign = TextAlign.Center,

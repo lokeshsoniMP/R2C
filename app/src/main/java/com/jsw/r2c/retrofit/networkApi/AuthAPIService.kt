@@ -12,7 +12,7 @@ import retrofit2.http.Path
 interface AuthAPIService {
 
 
-    @POST("Accounts/logintest")
+    @POST("Accounts/login")
     suspend fun Login(
         @Body loginRequest: LoginRequest
     ): LoginResponse

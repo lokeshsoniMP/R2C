@@ -58,6 +58,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -65,10 +66,11 @@ import androidx.navigation.compose.rememberNavController
 import com.jsw.r2c.R
 import com.jsw.r2c.presentation.theme.BlueDark
 import com.jsw.r2c.presentation.theme.Kefa
+import com.jsw.r2c.presentation.viewmodels.features.auth.AuthViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun PackagingSuperVisorDashBoardScreen(navController: NavController) {
+fun PackagingSuperVisorDashBoardScreen(navController: NavController, authViewModel: AuthViewModel = hiltViewModel()) {
 
     Box(modifier = Modifier.fillMaxSize()) {
 
@@ -78,8 +80,8 @@ fun PackagingSuperVisorDashBoardScreen(navController: NavController) {
             )
         ) {
             Text(
-                text = "Welcome\n Packaging Supervisor  Name",
-                fontSize = 24.sp,
+                text = "Welcome,\n${authViewModel.getUser().name?:""}",
+                fontSize = 18.sp,
                 color = Color.Black,
                 fontFamily = Kefa,
                 fontWeight = FontWeight.Bold

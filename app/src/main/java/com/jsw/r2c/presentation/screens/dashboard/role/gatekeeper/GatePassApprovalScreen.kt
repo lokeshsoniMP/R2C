@@ -61,7 +61,7 @@ fun GatePassApprovalScreen(navController: NavController) {
         ) {
             Text(
                 text = "Scan to GO",
-                fontSize = 24.sp,
+                fontSize = 20.sp,
                 color = Color.Black,
                 fontFamily = Kefa,
                 textAlign = TextAlign.Center,
@@ -100,7 +100,7 @@ fun GatePassApprovalScreen(navController: NavController) {
                         }
                 )
 
-                Text(text = "Gate Pass", fontSize = 24.sp)
+                Text(text = "Gate Pass", fontSize = 20.sp)
             }
         }
 

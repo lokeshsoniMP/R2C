@@ -68,6 +68,12 @@ fun StoreInChargeMainDashBoardScreen(authViewModel: AuthViewModel = hiltViewMode
             route = DashBoardNavigationRoute.Home.route
         ),
         NavigationItem(
+            title = "Dashboard",
+            selectedIcon = Icons.Filled.Home,
+            unselectedIcon = Icons.Outlined.Home,
+            route = DashBoardNavigationRoute.StoreRequisitionDashBoardScreen.route
+        ),
+        NavigationItem(
             title = "Tracking",
             selectedIcon = Icons.Filled.Home,
             unselectedIcon = Icons.Outlined.Home,
@@ -140,6 +146,9 @@ fun StoreInChargeMainDashBoardScreen(authViewModel: AuthViewModel = hiltViewMode
                     composable(DashBoardNavigationRoute.Home.route) {
                         StoreInchargeDashBoardScreen(navController)
                     }
+                    composable(DashBoardNavigationRoute.StoreRequisitionDashBoardScreen.route) {
+                        StoreRequisitionDashboard()
+                    }
                     composable(DashBoardNavigationRoute.TrackingRequisitionScreen.route) {
                         TrackingRequisitionScreen(navController)
                     }
@@ -154,6 +163,7 @@ fun StoreInChargeMainDashBoardScreen(authViewModel: AuthViewModel = hiltViewMode
                         LaunchedEffect(key1 = Unit) {
                             authViewModel.removeUserAppLoginPref()
                             val intent = Intent(context, MainActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK and Intent.FLAG_ACTIVITY_NEW_TASK
                             context.startActivity(intent)
                             (context as Activity).finish()
                         }

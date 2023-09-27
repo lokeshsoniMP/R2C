@@ -40,6 +40,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.jsw.r2c.R
 import com.jsw.r2c.base.Utilis
+import com.jsw.r2c.presentation.screens.dashboard.navigation.DashBoardNavigationRoute
 import com.jsw.r2c.presentation.screens.dashboard.role.RequisitionText
 import com.jsw.r2c.presentation.theme.BlueDark
 import com.jsw.r2c.presentation.theme.Kefa
@@ -198,8 +199,8 @@ fun PackageSupervisorDashBoardScreen(
             )
         ) {
             Text(
-                text = "Welcome\n ${authViewModel.getUser().name?:""}",
-                fontSize = 24.sp,
+                text = "Welcome,\n${authViewModel.getUser().name?:""}",
+                fontSize = 18.sp,
                 color = Color.Black,
                 fontFamily = Kefa,
                 fontWeight = FontWeight.Bold
@@ -226,7 +227,7 @@ fun PackageSupervisorDashBoardScreen(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(
-                            text = "Tracking ID: \n ${requisitionList.get(requisitionRequestIndex).id}",
+                            text = "Tracking ID: \n ${requisitionList[requisitionRequestIndex].id}",
                             color = BlueDark,
                             fontWeight = FontWeight.Bold
                         )
@@ -355,8 +356,8 @@ fun PackageSupervisorDashBoardScreen(
                     Button(
                         modifier = Modifier.fillMaxWidth(),
                         onClick = {
-
-                        },
+                            navController.navigate(DashBoardNavigationRoute.PackagingSuperVisorCreateGINScreen.route)
+                                  },
                         colors = ButtonDefaults.buttonColors(
                             disabledContainerColor = BlueDark,
                             containerColor = BlueDark
