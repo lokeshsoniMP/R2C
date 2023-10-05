@@ -57,6 +57,7 @@ import androidx.compose.ui.window.PopupProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.jsw.r2c.R
+import com.jsw.r2c.presentation.screens.dashboard.navigation.DashBoardNavigationRoute
 import com.jsw.r2c.presentation.theme.BlueDark
 import com.jsw.r2c.presentation.theme.Kefa
 import com.jsw.r2c.presentation.viewmodels.features.auth.AuthViewModel
@@ -350,6 +351,7 @@ fun AssignSuperviser(navController: NavController, viewModel: RequisitionViewMod
             LaunchedEffect(key1 = Unit) {
                 delay(2000)
                 isRequisitionFormSubmitted = false
+                navController.navigate(DashBoardNavigationRoute.Home.route)
             }
 
         }

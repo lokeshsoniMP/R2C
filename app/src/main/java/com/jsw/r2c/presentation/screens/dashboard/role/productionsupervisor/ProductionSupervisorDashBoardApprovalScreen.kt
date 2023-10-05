@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.jsw.r2c.base.Utilis
+import com.jsw.r2c.presentation.screens.dashboard.navigation.DashBoardNavigationRoute
 import com.jsw.r2c.presentation.screens.dashboard.role.RequisitionText
 import com.jsw.r2c.presentation.theme.BlueDark
 import com.jsw.r2c.presentation.theme.Kefa
@@ -520,6 +521,7 @@ fun ProductionSupervisorDashBoardApprovalScreen(
 
             LaunchedEffect(key1 = Unit) {
                 delay(3000)
+                navController.navigate(DashBoardNavigationRoute.Home.route)
             }
 
         }

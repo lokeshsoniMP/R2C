@@ -62,7 +62,10 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.jsw.r2c.R
+import com.jsw.r2c.presentation.screens.dashboard.navigation.DashBoardNavigationRoute
 import com.jsw.r2c.presentation.theme.BlueDark
 import com.jsw.r2c.presentation.theme.Kefa
 import com.jsw.r2c.presentation.viewmodels.features.auth.AuthViewModel
@@ -89,7 +92,7 @@ import java.util.Locale
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun RequisitionScreen(viewModel: RequisitionViewModel = hiltViewModel(),authViewModel: AuthViewModel = hiltViewModel()) {
+fun RequisitionScreen(navController: NavController, viewModel: RequisitionViewModel = hiltViewModel(), authViewModel: AuthViewModel = hiltViewModel()) {
     val materialId = rememberSaveable {
         mutableStateOf("")
     }
@@ -277,7 +280,7 @@ fun RequisitionScreen(viewModel: RequisitionViewModel = hiltViewModel(),authView
                                 viewModel.createRequisition(
                                     CreateRequisitionRequest(
                                         userId = authViewModel.getUser().name,
-                                        materialId = materialId.value.toInt(),
+                                        materialId = if(materialId.value.isNotEmpty()) materialId.value.toInt() else 1,
                                         quantity = quantity.value,
                                         unitsId = unityType.value,
                                         deliveryDate = deliveryDate.value,
@@ -383,6 +386,7 @@ fun RequisitionScreen(viewModel: RequisitionViewModel = hiltViewModel(),authView
                 delay(2000)
                 isRequisitionFormSubmitted = false
                 viewModel.createRequisitionResponse.value = ApiState.Empty
+                navController.navigate(DashBoardNavigationRoute.Home.route)
             }
 
         }

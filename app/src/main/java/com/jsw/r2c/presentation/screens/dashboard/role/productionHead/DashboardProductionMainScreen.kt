@@ -14,25 +14,20 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-
-import com.jsw.r2c.presentation.customviews.TopAppBarR2C
-import com.jsw.r2c.presentation.screens.dashboard.navigation.DashBoardNavigationRoute
-import com.jsw.r2c.presentation.screens.dashboard.navigation.NavigationItem
-import kotlinx.coroutines.launch
-import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
@@ -41,11 +36,13 @@ import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.jsw.r2c.presentation.activities.MainActivity
-import com.jsw.r2c.presentation.screens.auth.LoginScreen
+import com.jsw.r2c.presentation.customviews.TopAppBarR2C
 import com.jsw.r2c.presentation.screens.dashboard.DashBoardScreen
-import com.jsw.r2c.presentation.screens.dashboard.role.gatekeeper.GatePassApprovalScreen
+import com.jsw.r2c.presentation.screens.dashboard.navigation.DashBoardNavigationRoute
+import com.jsw.r2c.presentation.screens.dashboard.navigation.NavigationItem
 import com.jsw.r2c.presentation.screens.tracking.TrackingRequisitionScreen
 import com.jsw.r2c.presentation.viewmodels.features.auth.AuthViewModel
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -147,7 +144,7 @@ fun DashBoardProductionMainScreen(authViewModel: AuthViewModel = hiltViewModel()
                         DashBoardScreen(navController)
                     }
                     composable(DashBoardNavigationRoute.CreateRequisition.route) {
-                        RequisitionScreen()
+                        RequisitionScreen(navController)
                     }
                     composable(DashBoardNavigationRoute.RequisitionDashBoardScreen.route) {
                         RequisitionDashboardProductionHead()
@@ -166,7 +163,7 @@ fun DashBoardProductionMainScreen(authViewModel: AuthViewModel = hiltViewModel()
                         LaunchedEffect(key1 = Unit) {
                             authViewModel.removeUserAppLoginPref()
                             val intent = Intent(context, MainActivity::class.java)
-                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK and Intent.FLAG_ACTIVITY_NEW_TASK
+                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                             context.startActivity(intent)
                             (context as Activity).finish()
                         }

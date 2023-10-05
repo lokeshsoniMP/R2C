@@ -19,7 +19,7 @@ sealed class DashBoardNavigationRoute(val route: String) {
     object StoreRequisitionDashBoardScreen : DashBoardNavigationRoute("store_requisition_dashboard_screen")
     object TrackingRequisitionScreen: DashBoardNavigationRoute("tracking_requisition_dashboard_screen")
     object TransportPersonScreen: DashBoardNavigationRoute("transportPerson_dashboard_screen")
-    object GatePassApprovalScreen: DashBoardNavigationRoute("gateKeeper_pass_screen")
+    object GatePassTTGoodsDetailsScreen: DashBoardNavigationRoute("gateKeeper_tt_goods_screen")
     object RequisitionDashBoardScreen: DashBoardNavigationRoute("requisition_dashboard_screen")
     object GateKeeperDashboardScreen: DashBoardNavigationRoute("gateKeeper_dashboard_screen")
     object NotificationScreen: DashBoardNavigationRoute("notification_dashboard_screen")

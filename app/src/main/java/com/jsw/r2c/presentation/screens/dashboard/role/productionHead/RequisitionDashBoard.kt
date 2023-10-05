@@ -1,9 +1,7 @@
 package com.jsw.r2c.presentation.screens.dashboard.role.productionHead
 
-import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -12,7 +10,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,24 +18,23 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text2.input.rememberTextFieldState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.ComposeCompilerApi
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -48,35 +44,27 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.drawText
-
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
-
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.jsw.r2c.R
-import com.jsw.r2c.presentation.theme.BlueDark
 import com.jsw.r2c.presentation.viewmodels.features.requisition.RequisitionViewModel
-import com.jsw.r2c.retrofit.response.requisition.RequisitionListResponse
 import com.jsw.r2c.retrofit.response.requisition.RequisitionListResponseItem
-import com.jsw.r2c.retrofit.utlis.ApiState
-import java.lang.Integer.max
 import java.lang.Integer.min
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 @Composable
 fun RequisitionDashboardProductionHead(requisitionViewModel: RequisitionViewModel = hiltViewModel()) {
@@ -84,6 +72,7 @@ fun RequisitionDashboardProductionHead(requisitionViewModel: RequisitionViewMode
     var requisitionList = rememberSaveable {
         mutableListOf<RequisitionListResponseItem>()
     }
+
 
     LaunchedEffect(key1 = Unit) {
         requisitionViewModel.getRequisitionList()
@@ -209,7 +198,9 @@ fun RequisitionListHeader() {
 
 @Composable
 fun RequisitionListBodyItem(trackingId: MutableList<Long>, status: MutableList<String>) {
-
+    val documentDate = rememberSaveable {
+        mutableStateOf("")
+    }
     Column {
         Row {
             SearchBar()
@@ -219,11 +210,15 @@ fun RequisitionListBodyItem(trackingId: MutableList<Long>, status: MutableList<S
             Text(
                 text = "Dashboard",
                 textAlign = TextAlign.Start,
-                fontSize = TextUnit(18f, TextUnitType.Sp),
+                fontSize = TextUnit(16f, TextUnitType.Sp),
                 fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily.Serif,
                 color = Color.Black,
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
+            DateRangeDashboard(onDateSelected = {
+                documentDate.value = it
+            })
         }
         Spacer(modifier = Modifier.padding(8.dp))
         Row(
@@ -349,7 +344,92 @@ fun RequisitionListBodyItem(trackingId: MutableList<Long>, status: MutableList<S
     }
 
 }
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DateRangeDashboard(
+    onDateSelected: (String) -> Unit,
+) {
+    val date = Date()
+    val calendar = Calendar.getInstance()
+    calendar.time = date
+    calendar.set(
+        calendar.get(Calendar.YEAR),
+        calendar.get(Calendar.MONTH),
+        calendar.get(Calendar.DATE)
+    )
 
+    var selected by remember {
+        mutableStateOf("Select Date Range")
+    }
+    val datePickerState =
+        rememberDatePickerState(initialSelectedDateMillis = calendar.timeInMillis)
+    val showDialog = rememberSaveable { mutableStateOf(false) }
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .border(1.dp, Color.Gray, RoundedCornerShape(8))
+                .clickable {
+                    showDialog.value = !showDialog.value
+                }, verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = selected,
+                fontSize = 14.sp,
+                fontFamily = FontFamily.SansSerif,
+                fontWeight = FontWeight.SemiBold,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(0.8f)
+                    .padding(8.dp), color = Color.DarkGray
+            )
+            Image(
+                imageVector = Icons.Filled.CalendarMonth,
+                contentDescription = "Calender", modifier = Modifier.weight(0.2f)
+            )
+        }
+        if (showDialog.value){
+            DatePickerDialog(
+                onDismissRequest = { showDialog.value = false },
+                confirmButton = {
+                    TextButton(onClick = {
+                        showDialog.value = false
+                        val formatter = SimpleDateFormat("dd-MM-yyyy", Locale.ROOT)
+                        selected = formatter.format(datePickerState.selectedDateMillis?.let {
+                            Date(
+                                it
+                            )
+                        }!!)
+
+                        val formatter2 = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss'Z'", Locale.ROOT)
+//                        val formatter2 = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.sssZ", Locale.ROOT)
+                        onDateSelected(formatter2.format(datePickerState.selectedDateMillis?.let {
+                            Date(
+                                it
+                            )
+                        }!!))
+                    }) {
+                        Text("Ok")
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = { showDialog.value = false }) {
+                        Text("Cancel")
+                    }
+                }
+            ) {
+                DatePicker(state = datePickerState)
+
+            }
+        }
+
+    }
+}
 @Composable
 fun showPieChart() {
     Spacer(modifier = Modifier.padding(25.dp))

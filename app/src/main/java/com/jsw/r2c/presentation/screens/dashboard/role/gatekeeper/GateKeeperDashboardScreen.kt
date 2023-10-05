@@ -44,6 +44,7 @@ import com.journeyapps.barcodescanner.BarcodeEncoder
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
 import com.jsw.r2c.R
+import com.jsw.r2c.presentation.screens.dashboard.navigation.DashBoardNavigationRoute
 import com.jsw.r2c.presentation.screens.dashboard.role.RequisitionRequest
 import com.jsw.r2c.presentation.theme.BlueDark
 import com.jsw.r2c.presentation.theme.Kefa
@@ -145,57 +146,59 @@ fun GateKeeperDashboardScreen(navController: NavController, authViewModel: AuthV
 
         }
     } else {
-        Box(modifier = Modifier.fillMaxSize()) {
-
-            Column(
-                modifier = Modifier.padding(
-                    16.dp
-                )
-            ) {
-                Text(
-                    text = "Scan to GO",
-                    fontSize = 20.sp,
-                    color = Color.Black,
-                    fontFamily = Kefa,
-                    textAlign = TextAlign.Center,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Spacer(modifier = Modifier.padding(8.dp))
-
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-
-
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier
-                            .size(240.dp)
-                            .background(
-                                if (!isGatePassCancelled.value) Color.Green else Color.Red,
-                                shape = CircleShape
-                            )
-                    ) {
-                        Image(
-                            imageVector = if (!isGatePassCancelled.value) Icons.Filled.Check else Icons.Filled.Close,
-                            contentDescription = "Check",
-                            modifier = Modifier.size(72.dp),
-                            colorFilter = ColorFilter.tint(Color.White)
-                        )
-                    }
-                }
-            }
-
-
-        }
+//        Box(modifier = Modifier.fillMaxSize()) {
+//
+//            Column(
+//                modifier = Modifier.padding(
+//                    16.dp
+//                )
+//            ) {
+//                Text(
+//                    text = "Scan to GO",
+//                    fontSize = 20.sp,
+//                    color = Color.Black,
+//                    fontFamily = Kefa,
+//                    textAlign = TextAlign.Center,
+//                    fontWeight = FontWeight.Bold,
+//                    modifier = Modifier.fillMaxWidth()
+//                )
+//                Spacer(modifier = Modifier.padding(8.dp))
+//
+//                Column(
+//                    modifier = Modifier
+//                        .fillMaxWidth()
+//                        .padding(16.dp),
+//                    verticalArrangement = Arrangement.Center,
+//                    horizontalAlignment = Alignment.CenterHorizontally
+//                ) {
+//
+//
+//                    Box(
+//                        contentAlignment = Alignment.Center,
+//                        modifier = Modifier
+//                            .size(240.dp)
+//                            .background(
+//                                if (!isGatePassCancelled.value) Color.Green else Color.Red,
+//                                shape = CircleShape
+//                            )
+//                    ) {
+//                        Image(
+//                            imageVector = if (!isGatePassCancelled.value) Icons.Filled.Check else Icons.Filled.Close,
+//                            contentDescription = "Check",
+//                            modifier = Modifier.size(72.dp),
+//                            colorFilter = ColorFilter.tint(Color.White)
+//                        )
+//                    }
+//                }
+//            }
+//
+//
+//        }
+        navController.navigate(DashBoardNavigationRoute.GatePassTTGoodsDetailsScreen.route)
         LaunchedEffect(key1 = Unit) {
-            delay(3000)
-            isGatePassApproved.value = false
+//            delay(3000)
+//            isGatePassApproved.value = false
+
         }
     }
 

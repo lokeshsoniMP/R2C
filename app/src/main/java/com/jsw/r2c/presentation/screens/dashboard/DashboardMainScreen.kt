@@ -167,7 +167,7 @@ fun DashBoardMainScreen() {
                         DashBoardScreen(navController)
                     }
                     composable(DashBoardNavigationRoute.CreateRequisition.route) {
-                        RequisitionScreen()
+                        RequisitionScreen(navController)
                     }
                     composable(DashBoardNavigationRoute.ManagerDashaBoardScreen.route) {
                         ManagerDashBoardScreen(navController)

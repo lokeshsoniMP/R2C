@@ -158,7 +158,7 @@ fun TransportPersonDashboardScreen(navController: NavController, authViewModel: 
                     val bitmap = barcodeEncoder.encodeBitmap("content", BarcodeFormat.QR_CODE, 500, 500)
                     Image(bitmap = bitmap.asImageBitmap(), contentDescription = "",
                         modifier = Modifier.clickable {
-                            isGetPassSubmitted = true
+//                            isGetPassSubmitted = true
                         } )
 
 

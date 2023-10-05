@@ -75,6 +75,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.jsw.r2c.R
 import com.jsw.r2c.base.Utilis
+import com.jsw.r2c.presentation.screens.dashboard.navigation.DashBoardNavigationRoute
 import com.jsw.r2c.presentation.screens.dashboard.role.RequisitionText
 import com.jsw.r2c.presentation.theme.BlueDark
 import com.jsw.r2c.presentation.theme.Kefa
@@ -237,10 +238,7 @@ fun PackageSupervisorGoodsConfirmGIN(
                 (requisitionViewModel.getPlantsResponse.value as ApiState.Success<PlantResponse>).data
             plantLocationList.clear()
             plantLocationList.addAll(response)
-//            if(plantLocationList.isNotEmpty()){
-//
-//                requisitionViewModel.getStorageLocation(plantLocationList[0].id)
-//            }
+
 
         }
 
@@ -270,7 +268,8 @@ fun PackageSupervisorGoodsConfirmGIN(
         }
 
         is ApiState.Failure -> {
-            val response = (requisitionViewModel.getStorageLocationResponse.value as ApiState.Failure).msg
+            val response =
+                (requisitionViewModel.getStorageLocationResponse.value as ApiState.Failure).msg
 
         }
 
@@ -293,7 +292,8 @@ fun PackageSupervisorGoodsConfirmGIN(
         }
 
         is ApiState.Failure -> {
-            val response = (requisitionViewModel.createGINRequisitionResponse.value as ApiState.Failure).msg
+            val response =
+                (requisitionViewModel.createGINRequisitionResponse.value as ApiState.Failure).msg
 
         }
 
@@ -323,157 +323,162 @@ fun PackageSupervisorGoodsConfirmGIN(
             )
             Spacer(modifier = Modifier.padding(8.dp))
 
-             if (requisitionList.isNotEmpty()) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .border(2.dp, BlueDark, RoundedCornerShape(8))
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.Start
-            ) {
-
-
-                Spacer(modifier = Modifier.padding(8.dp))
-                Row(
+            if (requisitionList.isNotEmpty()) {
+                Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 8.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                        .border(2.dp, BlueDark, RoundedCornerShape(8))
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.Start
                 ) {
-                    Text(
-                        text = "Tracking ID: ",
-                        color = BlueDark,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text(
-                        text = "223344 ",
-                        color = BlueDark,
-                        fontWeight = FontWeight.Bold
-                    )
+
+
+                    Spacer(modifier = Modifier.padding(8.dp))
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 8.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = "Tracking ID: ",
+                            color = BlueDark,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text(
+                            text = "223344 ",
+                            color = BlueDark,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                    Spacer(modifier = Modifier.padding(8.dp))
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 8.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = "Material ID: ",
+                            color = Color.Gray,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text(
+                            text = "12333355353",
+                            color = Color.Black,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                    Spacer(modifier = Modifier.padding(8.dp))
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 8.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = "Short Text: ",
+                            color = Color.Gray,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text(
+                            text = "Raw Material",
+                            color = Color.Black,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                    Spacer(modifier = Modifier.padding(8.dp))
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 8.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = "Material Group: ",
+                            color = Color.Gray,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text(
+                            text = "Battery",
+                            color = Color.Black,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                    Spacer(modifier = Modifier.padding(8.dp))
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 8.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = "Plant Location: ",
+                            color = Color.Gray,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text(
+                            text = "Dolvi",
+                            color = Color.Black,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+
+
                 }
                 Spacer(modifier = Modifier.padding(8.dp))
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 8.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ){
-                    Text(
-                        text = "Material ID: ",
-                        color = Color.Gray,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text(
-                        text = "12333355353",
-                        color = Color.Black,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
+
+                RequisitionQuantityAndUnitTypeInputField(
+                    onSelectedQuantity = {
+                        quantity.value =
+                            if (it.isNotEmpty()) it.toInt() else return@RequisitionQuantityAndUnitTypeInputField
+                    },
+                    onUnitTypeSelected = {
+                        unityType.value = it.id
+                    })
                 Spacer(modifier = Modifier.padding(8.dp))
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 8.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ){
-                    Text(
-                        text = "Short Text: ",
-                        color = Color.Gray,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text(
-                        text = "Raw Material",
-                        color = Color.Black,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
+                DeliveryDate(
+                    onDateSelected = {
+                        documentDate.value = it
+                    })
                 Spacer(modifier = Modifier.padding(8.dp))
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 8.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ){
-                    Text(
-                        text = "Material Group: ",
-                        color = Color.Gray,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text(
-                        text = "Battery",
-                        color = Color.Black,
-                        fontWeight = FontWeight.Bold
-                    )
+                if (plantLocationList.isNotEmpty() && storageLocationList.isEmpty()) {
+
+                    requisitionViewModel.getStorageLocation(plantLocationList[0].id)
                 }
+                StorageLocationDialogTextInputWithDropDown(title = "Storage Location",
+                    hint = "Select Storage Location",
+                    storageLocationList = storageLocationList,
+                    onStorageLocationSelected = {
+                        storageLocationId.value = it.id
+
+                    }
+                )
                 Spacer(modifier = Modifier.padding(8.dp))
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 8.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ){
-                    Text(
-                        text = "Plant Location: ",
-                        color = Color.Gray,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text(
-                        text = "Dolvi",
-                        color = Color.Black,
-                        fontWeight = FontWeight.Bold
-                    )
+                Button(
+                    modifier = Modifier.fillMaxWidth(),
+                    onClick = {
+                        requisitionViewModel.createGINRequisitionViewModel(
+                            requisitionId = requisitionList[requisitionRequestIndex].id,
+                            CreateGINRequest(
+                                quantity = quantity.value,
+                                unitsId = unityType.value,
+                                documentDate = documentDate.value,
+                                ginStorageLocationId = storageLocationId.value
+                            )
+                        )
+                        isRequisitionFormSubmitted = true
+                        requisitionViewModel.createRequisitionResponse.value = ApiState.Empty
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        disabledContainerColor = BlueDark,
+                        containerColor = BlueDark
+                    ), shape = RoundedCornerShape(12)
+
+                ) {
+                    Text(text = stringResource(R.string.confirm_gin), color = Color.White)
                 }
-
-
-
-
-
-            }
-            Spacer(modifier = Modifier.padding(8.dp))
-
-            RequisitionQuantityAndUnitTypeInputField(
-                onSelectedQuantity = {
-                    quantity.value =
-                        if (it.isNotEmpty()) it.toInt() else return@RequisitionQuantityAndUnitTypeInputField
-                },
-                onUnitTypeSelected = {
-                    unityType.value = it.id
-                })
-            Spacer(modifier = Modifier.padding(8.dp))
-            DeliveryDate(
-                onDateSelected = {
-                    documentDate.value = it
-                })
-            Spacer(modifier = Modifier.padding(8.dp))
-
-            StorageLocationDialogTextInputWithDropDown(title = "Storage Location",
-                hint = "Select Storage Location",
-                storageLocationList = storageLocationList,
-                onStorageLocationSelected = {
-                    storageLocationId.value = it.id
-
-                }
-            )
-            Spacer(modifier = Modifier.padding(8.dp))
-            Button(
-                modifier = Modifier.fillMaxWidth(),
-                onClick = {
-                    requisitionViewModel.createGINRequisitionViewModel(requisitionId = requisitionList[requisitionRequestIndex].id,
-                        CreateGINRequest(quantity= quantity.value, unitsId = unityType.value, documentDate = documentDate.value,
-                            ginStorageLocationId = storageLocationId.value)
-                    )
-                    isRequisitionFormSubmitted = true
-                    requisitionViewModel.createRequisitionResponse.value = ApiState.Empty
-                },
-                colors = ButtonDefaults.buttonColors(
-                    disabledContainerColor = BlueDark,
-                    containerColor = BlueDark
-                ), shape = RoundedCornerShape(12)
-
-            ) {
-                Text(text = stringResource(R.string.confirm_gin), color = Color.White)
-            }
             }
 
 
@@ -483,13 +488,26 @@ fun PackageSupervisorGoodsConfirmGIN(
     }
 
     previewDesign(isRequisitionFormSubmitted = isRequisitionFormSubmitted)
+    if(isRequisitionFormSubmitted) {
+        LaunchedEffect(key1 = Unit) {
+            delay(2000)
+            navController.navigate(DashBoardNavigationRoute.Home.route)
+        }
+
+    }
 }
+
 //@Preview(showBackground = true)
 @Composable
-fun previewDesign(isRequisitionFormSubmitted:Boolean){
-    if(isRequisitionFormSubmitted) {
-        Box(modifier = Modifier.fillMaxSize().background(
-            color =  Color.White)) {
+fun previewDesign(isRequisitionFormSubmitted: Boolean) {
+    if (isRequisitionFormSubmitted) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    color = Color.White
+                )
+        ) {
 
 
             Spacer(modifier = Modifier.padding(16.dp))
@@ -540,13 +558,12 @@ fun previewDesign(isRequisitionFormSubmitted:Boolean){
                 }
             }
 
-            LaunchedEffect(key1 = Unit) {
-                delay(2000)
-            }
+
 
         }
     }
 }
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RequisitionQuantityAndUnitTypeInputField(
@@ -757,6 +774,7 @@ fun RequisitionQuantityAndUnitTypeInputField(
         }
     }
 }
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DeliveryDate(
@@ -813,7 +831,7 @@ fun DeliveryDate(
                 contentDescription = "Calender", modifier = Modifier.weight(0.2f)
             )
         }
-        if (showDialog.value){
+        if (showDialog.value) {
             DatePickerDialog(
                 onDismissRequest = { showDialog.value = false },
                 confirmButton = {
@@ -826,7 +844,8 @@ fun DeliveryDate(
                             )
                         }!!)
 
-                        val formatter2 = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss'Z'", Locale.ROOT)
+                        val formatter2 =
+                            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss'Z'", Locale.ROOT)
 //                        val formatter2 = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.sssZ", Locale.ROOT)
                         onDateSelected(formatter2.format(datePickerState.selectedDateMillis?.let {
                             Date(
@@ -850,6 +869,7 @@ fun DeliveryDate(
 
     }
 }
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StorageLocationDialogTextInputWithDropDown(
