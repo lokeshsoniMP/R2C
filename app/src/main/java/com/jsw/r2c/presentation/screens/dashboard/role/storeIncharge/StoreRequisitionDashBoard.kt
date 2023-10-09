@@ -4,6 +4,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -18,15 +19,21 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.DateRangePicker
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.rememberDateRangePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -42,16 +49,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.jsw.r2c.R
 import com.jsw.r2c.presentation.viewmodels.features.requisition.RequisitionViewModel
 import com.jsw.r2c.retrofit.response.requisition.RequisitionListResponseItem
 import java.lang.Integer.min
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 @Composable
 fun StoreRequisitionDashboard(requisitionViewModel: RequisitionViewModel = hiltViewModel()) {
@@ -125,6 +138,97 @@ fun SearchBar() {
             .fillMaxWidth()
     )
 }
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DateRangeDashboard(
+    onDateSelected: (String) -> Unit
+) {
+    val date = Date()
+    val calendar = Calendar.getInstance()
+    calendar.time = date
+    calendar.set(
+        calendar.get(Calendar.YEAR),
+        calendar.get(Calendar.MONTH),
+        calendar.get(Calendar.DATE)
+    )
+
+    var selected by remember {
+        mutableStateOf("Select Date Range")
+    }
+    val datePickerState =
+        rememberDateRangePickerState(initialSelectedStartDateMillis  = calendar.timeInMillis,
+            initialSelectedEndDateMillis = calendar.timeInMillis)
+    val showDialog = rememberSaveable { mutableStateOf(false) }
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .border(1.dp, Color.Gray, RoundedCornerShape(8))
+                .clickable {
+                    showDialog.value = !showDialog.value
+                }, verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = selected,
+                fontSize = 14.sp,
+                fontFamily = FontFamily.SansSerif,
+                fontWeight = FontWeight.SemiBold,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(0.8f)
+                    .padding(8.dp), color = Color.DarkGray
+            )
+            Image(
+                imageVector = Icons.Filled.CalendarMonth,
+                contentDescription = "Calender", modifier = Modifier.weight(0.2f)
+            )
+        }
+        if (showDialog.value){
+            DatePickerDialog(
+                onDismissRequest = { showDialog.value = false },
+                confirmButton = {
+                    TextButton(onClick = {
+                        showDialog.value = false
+                        val formatter = SimpleDateFormat("dd-MM-yyyy", Locale.ROOT)
+                        selected = formatter.format(datePickerState.selectedStartDateMillis?.let {
+                            Date(
+                                it
+                            )
+                        }!!) + " to " + formatter.format(datePickerState.selectedEndDateMillis?.let {
+                            Date(
+                                it
+                            )
+                        }!!)
+
+                        val formatter2 = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss'Z'", Locale.ROOT)
+//                        val formatter2 = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.sssZ", Locale.ROOT)
+                        onDateSelected(formatter2.format(datePickerState.selectedEndDateMillis?.let {
+                            Date(
+                                it
+                            )
+                        }!!))
+                    }) {
+                        Text("Ok")
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = { showDialog.value = false }) {
+                        Text("Cancel")
+                    }
+                }
+            ) {
+                DateRangePicker(state = datePickerState,modifier = Modifier.height(height = 500.dp))
+
+            }
+        }
+
+    }
+}
 @Composable
 fun RequisitionListHeader() {
 
@@ -184,7 +288,9 @@ fun RequisitionListHeader() {
 
 @Composable
 fun RequisitionListBodyItem(trackingId: MutableList<Long>, status: MutableList<String>) {
-
+    val documentDate = rememberSaveable {
+        mutableStateOf("")
+    }
     Column {
         Row {
             SearchBar()
@@ -199,6 +305,10 @@ fun RequisitionListBodyItem(trackingId: MutableList<Long>, status: MutableList<S
                 color = Color.Black,
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
+            DateRangeDashboard(
+                onDateSelected = {
+                    documentDate.value = it
+                })
         }
         Spacer(modifier = Modifier.padding(8.dp))
         Row(

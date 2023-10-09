@@ -1,5 +1,6 @@
 package com.jsw.r2c.presentation.screens.dashboard.role.productionHead
 
+import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -23,22 +24,33 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDefaults
 import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.DatePickerFormatter
+import androidx.compose.material3.DateRangePicker
+import androidx.compose.material3.DateRangePickerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.rememberDatePickerState
+import androidx.compose.material3.rememberDateRangePickerState
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -52,6 +64,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
@@ -60,6 +73,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.jsw.r2c.R
 import com.jsw.r2c.presentation.viewmodels.features.requisition.RequisitionViewModel
 import com.jsw.r2c.retrofit.response.requisition.RequisitionListResponseItem
+import kotlinx.coroutines.launch
 import java.lang.Integer.min
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -219,6 +233,9 @@ fun RequisitionListBodyItem(trackingId: MutableList<Long>, status: MutableList<S
             DateRangeDashboard(onDateSelected = {
                 documentDate.value = it
             })
+//            SampleDatePickerView(onDateSelected = {
+//                documentDate.value = it
+//            })
         }
         Spacer(modifier = Modifier.padding(8.dp))
         Row(
@@ -347,7 +364,7 @@ fun RequisitionListBodyItem(trackingId: MutableList<Long>, status: MutableList<S
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DateRangeDashboard(
-    onDateSelected: (String) -> Unit,
+    onDateSelected: (String) -> Unit
 ) {
     val date = Date()
     val calendar = Calendar.getInstance()
@@ -362,7 +379,8 @@ fun DateRangeDashboard(
         mutableStateOf("Select Date Range")
     }
     val datePickerState =
-        rememberDatePickerState(initialSelectedDateMillis = calendar.timeInMillis)
+        rememberDateRangePickerState(initialSelectedStartDateMillis  = calendar.timeInMillis,
+            initialSelectedEndDateMillis = calendar.timeInMillis)
     val showDialog = rememberSaveable { mutableStateOf(false) }
 
     Column(
@@ -400,7 +418,11 @@ fun DateRangeDashboard(
                     TextButton(onClick = {
                         showDialog.value = false
                         val formatter = SimpleDateFormat("dd-MM-yyyy", Locale.ROOT)
-                        selected = formatter.format(datePickerState.selectedDateMillis?.let {
+                        selected = formatter.format(datePickerState.selectedStartDateMillis?.let {
+                            Date(
+                                it
+                            )
+                        }!!) + " to " + formatter.format(datePickerState.selectedEndDateMillis?.let {
                             Date(
                                 it
                             )
@@ -408,7 +430,7 @@ fun DateRangeDashboard(
 
                         val formatter2 = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss'Z'", Locale.ROOT)
 //                        val formatter2 = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.sssZ", Locale.ROOT)
-                        onDateSelected(formatter2.format(datePickerState.selectedDateMillis?.let {
+                        onDateSelected(formatter2.format(datePickerState.selectedEndDateMillis?.let {
                             Date(
                                 it
                             )
@@ -423,7 +445,7 @@ fun DateRangeDashboard(
                     }
                 }
             ) {
-                DatePicker(state = datePickerState)
+                DateRangePicker(state = datePickerState,modifier = Modifier.height(height = 500.dp))
 
             }
         }
@@ -536,3 +558,4 @@ internal fun PieChartScreen() {
     )
 
 }
+
