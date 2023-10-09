@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -96,6 +97,10 @@ fun PackageSupervisorDashBoardScreen(
     }
     when (requisitionViewModel.getRequisitionListResponse.value) {
         ApiState.Loading -> {
+            CircularProgressIndicator(
+                color = Color.LightGray,
+                modifier = Modifier.padding(4.dp)
+            )
         }
 
         is ApiState.Success -> {
@@ -168,6 +173,10 @@ fun PackageSupervisorDashBoardScreen(
     }
     when (requisitionViewModel.getPlantsResponse.value) {
         ApiState.Loading -> {
+            CircularProgressIndicator(
+                color = Color.LightGray,
+                modifier = Modifier.padding(4.dp)
+            )
 
         }
 

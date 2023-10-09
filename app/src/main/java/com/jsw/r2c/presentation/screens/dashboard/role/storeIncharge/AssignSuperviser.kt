@@ -123,6 +123,10 @@ fun AssignSuperviser(navController: NavController, viewModel: RequisitionViewMod
 
     when (viewModel.assignPackagingSupervisorResponse.value) {
         ApiState.Loading -> {
+            CircularProgressIndicator(
+                color = Color.LightGray,
+                modifier = Modifier.padding(4.dp)
+            )
         }
 
         is ApiState.Success -> {
@@ -180,6 +184,10 @@ fun AssignSuperviser(navController: NavController, viewModel: RequisitionViewMod
                     )
                     when (viewModel.getStorageLocationResponse.value) {
                         ApiState.Loading -> {
+                            CircularProgressIndicator(
+                                color = Color.LightGray,
+                                modifier = Modifier.padding(4.dp)
+                            )
                         }
 
                         is ApiState.Success -> {
@@ -270,7 +278,7 @@ fun AssignSuperviser(navController: NavController, viewModel: RequisitionViewMod
                 when (viewModel.createRequisitionResponse.value) {
                     ApiState.Loading -> {
                         CircularProgressIndicator(
-                            color = Color.White,
+                            color = Color.LightGray,
                             modifier = Modifier.padding(4.dp)
                         )
                     }
