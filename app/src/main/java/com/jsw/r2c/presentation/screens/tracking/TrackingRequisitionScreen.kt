@@ -420,7 +420,7 @@ fun TrackingRequisitionScreen(
                     ) {
                         Column {
                             Image(
-                                painter = painterResource(id = R.drawable.requestion_1),
+                                painter = painterResource(id = R.drawable.stamp_),
                                 contentDescription = "Requisition",
                                 modifier = Modifier
 
@@ -473,7 +473,7 @@ fun TrackingRequisitionScreen(
                     ) {
                         Column {
                             Image(
-                                painter = painterResource(id = R.drawable.requestion_1),
+                                painter = painterResource(id = R.drawable.stamp_),
                                 contentDescription = "Requisition",
                                 modifier = Modifier
 
@@ -534,6 +534,210 @@ fun TrackingRequisitionScreen(
 
                                     .background(
                                         Color(
+                                            0xFF1B6A65
+                                        ), shape = CircleShape
+                                    )
+                                    .padding(12.dp)
+                            )
+                            VerticalDivider(
+                                modifier = Modifier
+                                    .height(24.dp)
+                                    .padding(start = 21.dp)
+                                    .width(width = 4.dp),
+                                color = Color(
+                                    0xFFE1E1E1
+                                )
+                            )
+                        }
+                        Spacer(modifier = Modifier.padding(16.dp))
+                        Column() {
+                            Text(
+                                text = "Packing Supervisor",
+                                fontSize = 15.sp,
+                                color = Color.DarkGray, fontWeight = FontWeight.Bold
+                            )
+                            Row {
+                                Text(
+                                    text = actionDate,
+                                    fontSize = 12.sp,
+                                    color = Color.DarkGray
+                                )
+                                Spacer(modifier = Modifier.padding(16.dp))
+                                Text(
+                                    text = actionTime,
+                                    fontSize = 12.sp,
+                                    color = Color.DarkGray,
+                                )
+                            }
+                        }
+                    }
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    ) {
+                        Column {
+                            Image(
+                                painter = painterResource(id = R.drawable.requestion_1),
+                                contentDescription = "Requisition",
+                                modifier = Modifier
+
+                                    .size(46.dp)
+
+                                    .background(
+                                        Color(
+                                            0xFF1B6A65
+                                        ), shape = CircleShape
+                                    )
+                                    .padding(12.dp)
+                            )
+                            VerticalDivider(
+                                modifier = Modifier
+                                    .height(24.dp)
+                                    .padding(start = 21.dp)
+                                    .width(width = 4.dp),
+                                color = Color(
+                                    0xFFE1E1E1
+                                )
+                            )
+                        }
+                        Spacer(modifier = Modifier.padding(16.dp))
+                        Column() {
+                            Text(
+                                text = "Goods Issue Note Generated",
+                                fontSize = 15.sp,
+                                color = Color.DarkGray, fontWeight = FontWeight.Bold
+                            )
+                            Row {
+                                Text(
+                                    text = actionDate,
+                                    fontSize = 12.sp,
+                                    color = Color.DarkGray
+                                )
+                                Spacer(modifier = Modifier.padding(16.dp))
+                                Text(
+                                    text = actionTime,
+                                    fontSize = 12.sp,
+                                    color = Color.DarkGray,
+                                )
+                            }
+                        }
+                    }
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    ) {
+                        Column {
+                            Image(
+                                painter = painterResource(id = R.drawable.requestion_1),
+                                contentDescription = "Requisition",
+                                modifier = Modifier
+
+                                    .size(46.dp)
+
+                                    .background(
+                                        Color(
+                                            0xFFBBBBBB
+                                        ), shape = CircleShape
+                                    )
+                                    .padding(12.dp)
+                            )
+                            VerticalDivider(
+                                modifier = Modifier
+                                    .height(24.dp)
+                                    .padding(start = 21.dp)
+                                    .width(width = 4.dp),
+                                color = Color(
+                                    0xFFE1E1E1
+                                )
+                            )
+                        }
+                        Spacer(modifier = Modifier.padding(16.dp))
+                        Column() {
+                            Text(
+                                text = "T/T Assigned for Pickup",
+                                fontSize = 15.sp,
+                                color = Color.DarkGray, fontWeight = FontWeight.Bold
+                            )
+                            Row {
+                                Text(
+                                    text = actionDate,
+                                    fontSize = 12.sp,
+                                    color = Color.DarkGray
+                                )
+                                Spacer(modifier = Modifier.padding(16.dp))
+                                Text(
+                                    text = actionTime,
+                                    fontSize = 12.sp,
+                                    color = Color.DarkGray,
+                                )
+                            }
+                        }
+                    }
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    ) {
+                        Column {
+                            Image(
+                                painter = painterResource(id = R.drawable.scan_qr),
+                                contentDescription = "Requisition",
+                                modifier = Modifier
+
+                                    .size(46.dp)
+
+                                    .background(
+                                        Color(
+                                            0xFFBBBBBB
+                                        ), shape = CircleShape
+                                    )
+                                    .padding(12.dp)
+                            )
+                            VerticalDivider(
+                                modifier = Modifier
+                                    .height(24.dp)
+                                    .padding(start = 21.dp)
+                                    .width(width = 4.dp),
+                                color = Color(
+                                    0xFFE1E1E1
+                                )
+                            )
+                        }
+                        Spacer(modifier = Modifier.padding(16.dp))
+                        Column() {
+                            Text(
+                                text = "T/T Gate Entry Scan Complete",
+                                fontSize = 15.sp,
+                                color = Color.DarkGray, fontWeight = FontWeight.Bold
+                            )
+                            Row {
+                                Text(
+                                    text = actionDate,
+                                    fontSize = 12.sp,
+                                    color = Color.DarkGray
+                                )
+                                Spacer(modifier = Modifier.padding(16.dp))
+                                Text(
+                                    text = actionTime,
+                                    fontSize = 12.sp,
+                                    color = Color.DarkGray,
+                                )
+                            }
+                        }
+                    }
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    ) {
+                        Column {
+                            Image(
+                                painter = painterResource(id = R.drawable.requestion_1),
+                                contentDescription = "Requisition",
+                                modifier = Modifier
+
+                                    .size(46.dp)
+
+                                    .background(
+                                        Color(
                                             0xFFBBBBBB
                                         ), shape = CircleShape
                                     )
@@ -571,7 +775,6 @@ fun TrackingRequisitionScreen(
                             }
                         }
                     }
-
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -604,7 +807,7 @@ fun TrackingRequisitionScreen(
                         Spacer(modifier = Modifier.padding(16.dp))
                         Column() {
                             Text(
-                                text = "Goods Collected by T/T",
+                                text = "Goods Loaded by T/T",
                                 fontSize = 15.sp,
                                 color = Color.DarkGray, fontWeight = FontWeight.Bold
                             )
@@ -623,7 +826,57 @@ fun TrackingRequisitionScreen(
                             }
                         }
                     }
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    ) {
+                        Column {
+                            Image(
+                                painter = painterResource(id = R.drawable.requestion_1),
+                                contentDescription = "Requisition",
+                                modifier = Modifier
 
+                                    .size(46.dp)
+
+                                    .background(
+                                        Color(
+                                            0xFFD0DCFF
+                                        ), shape = CircleShape
+                                    )
+                                    .padding(12.dp)
+                            )
+                            VerticalDivider(
+                                modifier = Modifier
+                                    .height(24.dp)
+                                    .padding(start = 21.dp)
+                                    .width(width = 4.dp),
+                                color = Color(
+                                    0xFFE1E1E1
+                                )
+                            )
+                        }
+                        Spacer(modifier = Modifier.padding(16.dp))
+                        Column() {
+                            Text(
+                                text = "T/T Exit Gate Pass Scanned",
+                                fontSize = 15.sp,
+                                color = Color.DarkGray, fontWeight = FontWeight.Bold
+                            )
+                            Row {
+                                Text(
+                                    text = actionDate,
+                                    fontSize = 12.sp,
+                                    color = Color.DarkGray
+                                )
+                                Spacer(modifier = Modifier.padding(16.dp))
+                                Text(
+                                    text = actionTime,
+                                    fontSize = 12.sp,
+                                    color = Color.DarkGray,
+                                )
+                            }
+                        }
+                    }
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -813,6 +1066,57 @@ fun TrackingRequisitionScreen(
                         Column() {
                             Text(
                                 text = "Goods Unloaded",
+                                fontSize = 15.sp,
+                                color = Color.DarkGray, fontWeight = FontWeight.Bold
+                            )
+                            Row {
+                                Text(
+                                    text = actionDate,
+                                    fontSize = 12.sp,
+                                    color = Color.DarkGray
+                                )
+                                Spacer(modifier = Modifier.padding(16.dp))
+                                Text(
+                                    text = actionTime,
+                                    fontSize = 12.sp,
+                                    color = Color.DarkGray,
+                                )
+                            }
+                        }
+                    }
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    ) {
+                        Column {
+                            Image(
+                                painter = painterResource(id = R.drawable.requestion_1),
+                                contentDescription = "Requisition",
+                                modifier = Modifier
+
+                                    .size(46.dp)
+
+                                    .background(
+                                        Color(
+                                            0xFFD0DCFF
+                                        ), shape = CircleShape
+                                    )
+                                    .padding(12.dp)
+                            )
+                            VerticalDivider(
+                                modifier = Modifier
+                                    .height(24.dp)
+                                    .padding(start = 21.dp)
+                                    .width(width = 4.dp),
+                                color = Color(
+                                    0xFFE1E1E1
+                                )
+                            )
+                        }
+                        Spacer(modifier = Modifier.padding(16.dp))
+                        Column() {
+                            Text(
+                                text = "Goods Receipt Note",
                                 fontSize = 15.sp,
                                 color = Color.DarkGray, fontWeight = FontWeight.Bold
                             )
